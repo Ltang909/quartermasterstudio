@@ -1,0 +1,5 @@
+# Retired blog posts (removed 2026-09-24; blog starts empty). Serve 410 Gone
+# so stale files left on the server by overlay deploys stop resolving.
+Redirect 410 /blog/twenty-guests/
+Redirect 410 /blog/seating-chart-strategy/
+Redirect 410 /blog/what-a-dinner-buys/
