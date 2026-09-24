@@ -5,69 +5,53 @@
   var SITE_HEADER = `<header class="site">
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="Quartermaster Studio home">
-      <svg class="brand-logo" viewBox="0 0 120 120" aria-hidden="true">
-        <g fill="none" stroke="#8d6b57" stroke-width="4">
-          <circle cx="60" cy="60" r="40"/>
-          <circle cx="60" cy="60" r="31" stroke-width="2.5"/>
-        </g>
-        <g fill="#8d6b57">
-          <polygon points="60,8 64,34 60,30 56,34"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(90 60 60)"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(180 60 60)"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(270 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(45 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(135 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(225 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(315 60 60)"/>
-        </g>
-        <text x="60" y="62" text-anchor="middle" dominant-baseline="central" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="600" font-size="42" fill="#8d6b57">Q</text>
-      </svg>
-      <span class="brand-word">QUARTERMASTER</span>
+      <span class="brand-logo"><img src="/assets/img/mark.svg" alt="Quartermaster Studio compass mark" width="42" height="42"></span>
+      <span class="brand-word"><span>Quartermaster</span><span>Studio</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/" data-nav="home">Home</a>
       <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
       <a href="/past-events/" data-nav="past-events">Past Events</a>
       <a href="/blog/" data-nav="blog">Blog</a>
-      <a href="/contact/" data-nav="contact">Contact</a>
-      <a href="/contact/" class="btn nav-cta" style="padding:10px 20px;">Reserve a Consultation</a>
+      <a href="/portal/" data-nav="portal">Portal</a>
+      <a href="/contact/" class="btn btn-primary nav-cta">Reserve a Consultation</a>
     </nav>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+    <a href="/" data-nav="home">Home</a>
+    <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
+    <a href="/past-events/" data-nav="past-events">Past Events</a>
+    <a href="/blog/" data-nav="blog">Blog</a>
+    <a href="/portal/" data-nav="portal">Portal</a>
+    <a href="/contact/" class="btn btn-primary">Reserve a Consultation</a>
+  </nav>
 </header>`;
   var SITE_FOOTER = `<footer class="site">
   <div class="wrap">
-    <div class="foot-grid">
-      <div>
+    <div class="footer-grid">
+      <div class="footer-brand">
         <div class="foot-brand">Quartermaster Studio</div>
-        <p style="font-size:0.95rem; max-width:34ch;">Executive dinners and private events, provisioned down to the last detail.</p>
+        <p>Executive dinners and private events, provisioned down to the last detail.</p>
       </div>
-      <div>
+      <div class="footer-links">
         <h4>Studio</h4>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/roi-calculator/">ROI Calculator</a></li>
-          <li><a href="/past-events/">Past Events</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/contact/">Contact</a></li>
-        </ul>
+        <a href="/">Home</a>
+        <a href="/roi-calculator/">ROI Calculator</a>
+        <a href="/past-events/">Past Events</a>
+        <a href="/blog/">Blog</a>
+        <a href="/portal/">Portal</a>
+        <a href="/contact/">Contact</a>
       </div>
-      <div>
-        <h4>Services</h4>
-        <ul>
-          <li><a href="/#services">Full-Service Planning</a></li>
-          <li><a href="/#services">Venue Sourcing</a></li>
-          <li><a href="/#services">On-Site Coordination</a></li>
-        </ul>
-      </div>
-      <div>
+      <div class="footer-links">
         <h4>Begin</h4>
-        <ul>
-          <li><a href="/contact/">Reserve a Consultation</a></li>
-          <li><a href="/roi-calculator/">Run Your Numbers</a></li>
-        </ul>
+        <a href="/contact/">Reserve a Consultation</a>
+        <a href="/roi-calculator/">Run Your Numbers</a>
       </div>
     </div>
-    <div class="foot-bottom">
+    <div class="footer-note">
       <span>&copy; <span data-year>2026</span> Quartermaster Studio. All rights reserved.</span>
       <span>Provisioned with care.</span>
     </div>

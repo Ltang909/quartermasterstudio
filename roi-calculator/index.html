@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ROI Calculator - Quartermaster Studio</title>
 <meta name="description" content="In-house hire or one number per dinner? Put your own figures in and see what an executive dinner program actually costs and risks.">
-<link rel="stylesheet" href="/assets/css/style.css?v=20260924f">
-<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css?v=20260924g">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg?v=20260924g">
 <style>
   /* ---------- calculator components ---------- */
   .panel {
-    background: var(--card);
+    background: var(--slate);
     border: 1px solid var(--line);
     border-radius: 20px;
     padding: 44px;
@@ -25,15 +25,15 @@
   .money-field { position: relative; }
   .money-field > span {
     position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-    font-weight: 800; color: var(--text-muted);
+    font-weight: 800; color: var(--cloud-faint);
   }
   .money-field input { padding-left: 34px !important; font-weight: 700; }
 
   .slider-block { margin-bottom: 6px; }
   .slider-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-  .slider-head label { font-weight: 800; color: var(--ink); }
-  .slider-head .range-val { font-family: var(--font-display); font-size: 1.5rem; font-weight: 650; color: var(--brass); }
-  .slider-hint { font-size: 0.9rem; color: var(--text-muted); margin: 2px 0 10px; }
+  .slider-head label { font-weight: 800; color: var(--cloud); }
+  .slider-head .range-val { font-family: var(--font-display); font-size: 1.5rem; font-weight: 650; color: var(--cedar); }
+  .slider-hint { font-size: 0.9rem; color: var(--cloud-faint); margin: 2px 0 10px; }
 
   input[type="range"] {
     -webkit-appearance: none; appearance: none;
@@ -41,145 +41,145 @@
   }
   input[type="range"]::-webkit-slider-runnable-track {
     height: 6px; border-radius: 999px;
-    background: linear-gradient(to right, var(--brass) 0%, var(--brass) var(--fill,50%), var(--paper-deep) var(--fill,50%), var(--paper-deep) 100%);
-    border: 1px solid var(--line-strong);
+    background: linear-gradient(to right, var(--cedar) 0%, var(--cedar) var(--fill,50%), var(--forage-deep) var(--fill,50%), var(--forage-deep) 100%);
+    border: 1px solid var(--line);
   }
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; appearance: none;
     width: 22px; height: 22px; border-radius: 50%;
-    background: var(--ink); border: 3px solid var(--paper);
+    background: var(--cloud); border: 3px solid var(--forage);
     box-shadow: 0 1px 4px rgba(22,34,47,0.35);
     margin-top: -9px;
   }
   input[type="range"]::-moz-range-track {
-    height: 6px; border-radius: 999px; background: var(--paper-deep);
-    border: 1px solid var(--line-strong);
+    height: 6px; border-radius: 999px; background: var(--forage-deep);
+    border: 1px solid var(--line);
   }
-  input[type="range"]::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--brass); }
+  input[type="range"]::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--cedar); }
   input[type="range"]::-moz-range-thumb {
     width: 16px; height: 16px; border-radius: 50%;
-    background: var(--ink); border: 3px solid var(--paper);
+    background: var(--cloud); border: 3px solid var(--forage);
     box-shadow: 0 1px 4px rgba(22,34,47,0.35);
   }
 
   .basis-line {
     margin-top: 20px; padding-top: 20px;
-    border-top: 1px dashed var(--line-strong);
-    font-size: 0.92rem; color: var(--text-muted); font-style: italic;
+    border-top: 1px dashed var(--line);
+    font-size: 0.92rem; color: var(--cloud-faint); font-style: italic;
   }
 
   /* verdict */
   .verdict {
     border-radius: 18px; padding: 34px 38px; margin-bottom: 28px;
-    border: 1px solid var(--line-strong);
+    border: 1px solid var(--line);
   }
   .verdict-head { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 650; margin-bottom: 8px; }
   .verdict-sub { font-size: 1.05rem; max-width: 64ch; }
-  .verdict.win { background: #eef4e6; border-color: #b9d3a5; }
-  .verdict.win .verdict-head { color: #2f5d23; }
-  .verdict.tie { background: var(--paper-deep); }
-  .verdict.lose { background: var(--ink); border-color: var(--ink); }
-  .verdict.lose .verdict-head { color: var(--paper); }
-  .verdict.lose .verdict-sub { color: #c6d0dc; }
+  .verdict.win { background: var(--slate-soft); border-color: var(--cedar); }
+  .verdict.win .verdict-head { color: var(--cedar-light); }
+  .verdict.tie { background: var(--forage-deep); }
+  .verdict.lose { background: var(--forage-deep); border-color: var(--line); }
+  .verdict.lose .verdict-head { color: var(--cloud); }
+  .verdict.lose .verdict-sub { color: var(--cloud-dim); }
 
   /* tiles */
   .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 28px; }
   .tile {
     border-radius: 18px; padding: 32px;
-    border: 1px solid var(--line-strong);
+    border: 1px solid var(--line);
   }
   .tile .tile-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
   .tile .tile-num { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 650; line-height: 1; margin-bottom: 12px; }
   .tile .tile-note { font-size: 0.98rem; margin: 0; }
-  .tile.inhouse { background: var(--card); }
-  .tile.inhouse .tile-label { color: var(--brass); }
-  .tile.inhouse .tile-num { color: var(--ink); }
-  .tile.agency { background: var(--ink); border-color: var(--ink); color: #dfe5ec; }
-  .tile.agency .tile-label { color: var(--brass-bright); }
-  .tile.agency .tile-num { color: var(--paper); }
-  .tile.agency .tile-note { color: #a9b6c4; }
+  .tile.inhouse { background: var(--slate); }
+  .tile.inhouse .tile-label { color: var(--cedar); }
+  .tile.inhouse .tile-num { color: var(--cloud); }
+  .tile.agency { background: var(--forage-deep); border-color: var(--line); color: #dfe5ec; }
+  .tile.agency .tile-label { color: var(--cedar-light); }
+  .tile.agency .tile-num { color: var(--cloud); }
+  .tile.agency .tile-note { color: var(--cloud-faint); }
 
   /* bar charts */
   .bbar-row { display: grid; grid-template-columns: 220px 1fr 110px; gap: 18px; align-items: center; margin-bottom: 16px; }
-  .bbar-label strong { display: block; color: var(--ink); font-size: 0.98rem; }
-  .bbar-label span { font-size: 0.85rem; color: var(--text-muted); }
+  .bbar-label strong { display: block; color: var(--cloud); font-size: 0.98rem; }
+  .bbar-label span { font-size: 0.85rem; color: var(--cloud-faint); }
   .bbar-track {
-    height: 44px; border-radius: 10px; background: var(--paper-deep);
+    height: 44px; border-radius: 10px; background: var(--forage-deep);
     border: 1px solid var(--line); overflow: hidden; position: relative;
     display: flex;
   }
   .bbar-seg { height: 100%; display: flex; align-items: center; }
-  .bbar-seg.seen { background: var(--ink); }
-  .bbar-seg.hidden { background: var(--brass); justify-content: flex-end; }
+  .bbar-seg.seen { background: var(--cloud); }
+  .bbar-seg.hidden { background: var(--cedar); justify-content: flex-end; }
   .bbar-seg.hidden span {
-    color: #fff; font-size: 0.8rem; font-weight: 800; padding-right: 12px; white-space: nowrap;
+    color: var(--cloud); font-size: 0.8rem; font-weight: 800; padding-right: 12px; white-space: nowrap;
   }
-  .bbar-val { font-family: var(--font-display); font-weight: 650; font-size: 1.25rem; color: var(--ink); text-align: right; }
-  .bbar-foot { font-size: 0.92rem; color: var(--text-muted); font-style: italic; margin-top: 6px; }
+  .bbar-val { font-family: var(--font-display); font-weight: 650; font-size: 1.25rem; color: var(--cloud); text-align: right; }
+  .bbar-foot { font-size: 0.92rem; color: var(--cloud-faint); font-style: italic; margin-top: 6px; }
   .legend { display: flex; gap: 26px; flex-wrap: wrap; margin: 18px 0 4px; font-size: 0.92rem; font-weight: 700; }
   .legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 8px; vertical-align: -1px; }
-  .sw.seen { background: var(--ink); }
-  .sw.hidden { background: var(--brass); }
+  .sw.seen { background: var(--cloud); }
+  .sw.hidden { background: var(--cedar); }
 
   /* risk whisker */
   .bbar-track.risk { display: block; }
   .whisker {
     position: absolute; top: 50%; height: 8px; transform: translateY(-50%);
-    background: repeating-linear-gradient(to right, var(--ink) 0 8px, transparent 8px 14px);
-    border-left: 3px solid var(--ink); border-right: 3px solid var(--ink);
+    background: repeating-linear-gradient(to right, var(--cloud) 0 8px, transparent 8px 14px);
+    border-left: 3px solid var(--cloud); border-right: 3px solid var(--cloud);
   }
   .whisker-dot, .agency-dot {
     position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%;
-    transform: translate(-50%, -50%); border: 3px solid var(--paper);
+    transform: translate(-50%, -50%); border: 3px solid var(--forage);
     box-shadow: 0 1px 4px rgba(22,34,47,0.4);
   }
-  .whisker-dot { background: var(--brass); }
-  .agency-dot { background: var(--seafoam); }
+  .whisker-dot { background: var(--cedar); }
+  .agency-dot { background: var(--cedar-light); }
 
   /* risk pair */
   .risk-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 28px 0; }
-  .risk-card { border: 1px solid var(--line-strong); border-radius: 16px; padding: 28px; background: var(--paper); }
-  .risk-card .rc-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-  .risk-card .rc-num { font-family: var(--font-display); font-size: clamp(2rem, 3.6vw, 2.7rem); font-weight: 650; color: var(--ink); line-height: 1; margin-bottom: 10px; }
-  .risk-card .rc-note { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
-  .risk-card.agency-card { background: var(--ink); border-color: var(--ink); }
-  .risk-card.agency-card .rc-label { color: var(--brass-bright); }
-  .risk-card.agency-card .rc-num { color: var(--paper); }
-  .risk-card.agency-card .rc-note { color: #a9b6c4; }
+  .risk-card { border: 1px solid var(--line); border-radius: 16px; padding: 28px; background: var(--forage); }
+  .risk-card .rc-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cloud-faint); margin-bottom: 8px; }
+  .risk-card .rc-num { font-family: var(--font-display); font-size: clamp(2rem, 3.6vw, 2.7rem); font-weight: 650; color: var(--cloud); line-height: 1; margin-bottom: 10px; }
+  .risk-card .rc-note { font-size: 0.95rem; color: var(--cloud-faint); margin: 0; }
+  .risk-card.agency-card { background: var(--forage-deep); border-color: var(--line); }
+  .risk-card.agency-card .rc-label { color: var(--cedar-light); }
+  .risk-card.agency-card .rc-num { color: var(--cloud); }
+  .risk-card.agency-card .rc-note { color: var(--cloud-faint); }
 
   /* tables */
   .table-scroll { overflow-x: auto; margin-top: 24px; border: 1px solid var(--line); border-radius: 14px; }
-  table.qmtable { width: 100%; border-collapse: collapse; font-size: 0.96rem; min-width: 640px; background: #fff; }
+  table.qmtable { width: 100%; border-collapse: collapse; font-size: 0.96rem; min-width: 640px; background: var(--cloud); }
   table.qmtable th {
     text-align: left; font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--text-muted); padding: 14px 18px; border-bottom: 2px solid var(--line-strong);
-    background: var(--paper); white-space: nowrap;
+    color: var(--cloud-faint); padding: 14px 18px; border-bottom: 2px solid var(--line);
+    background: var(--forage); white-space: nowrap;
   }
   table.qmtable td { padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  table.qmtable td.num { font-weight: 800; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  table.qmtable td.where { color: var(--text-muted); font-size: 0.9rem; }
-  table.qmtable tr.subtotal td { background: var(--paper-deep); font-weight: 700; }
-  table.qmtable tr.total td { background: var(--ink); color: var(--paper); border-bottom: none; }
-  table.qmtable tr.total td.num { color: var(--paper); }
-  table.qmtable tr.total td.where { color: #a9b6c4; }
-  .row-note { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 400; margin-top: 4px; }
+  table.qmtable td.num { font-weight: 800; color: var(--cloud); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.qmtable td.where { color: var(--cloud-faint); font-size: 0.9rem; }
+  table.qmtable tr.subtotal td { background: var(--forage-deep); font-weight: 700; }
+  table.qmtable tr.total td { background: var(--forage-deep); color: var(--cloud); border-bottom: none; }
+  table.qmtable tr.total td.num { color: var(--cedar-light); }
+  table.qmtable tr.total td.where { color: var(--cloud-faint); }
+  .row-note { display: block; font-size: 0.85rem; color: var(--cloud-faint); font-weight: 400; margin-top: 4px; }
 
   .honest-note {
     margin-top: 24px; padding: 20px 24px;
-    border-left: 3px solid var(--brass); background: var(--paper);
+    border-left: 3px solid var(--cedar); background: var(--forage);
     border-radius: 0 12px 12px 0; font-size: 0.98rem;
   }
 
   /* lead capture */
   .lead-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 14px; align-items: end; margin-top: 24px; }
   .lead-msg { font-weight: 700; margin-top: 14px; display: none; }
-  .lead-msg.bad { display: block; color: #a33b2e; }
-  .lead-msg.good { display: block; color: var(--seafoam); }
-  .fine-print { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 14px; }
+  .lead-msg.bad { display: block; color: #e08a7d; }
+  .lead-msg.good { display: block; color: var(--cedar-light); }
+  .fine-print { font-size: 0.88rem; color: var(--cloud-faint); font-style: italic; margin-top: 14px; }
   #qmWriteUp { margin-top: 24px; }
   #qmWriteUp pre {
     white-space: pre-wrap; font-family: var(--font-body); font-size: 0.95rem;
-    background: var(--paper-deep); border: 1px solid var(--line-strong);
+    background: var(--forage-deep); border: 1px solid var(--line);
     border-radius: 12px; padding: 24px; line-height: 1.7;
   }
 
@@ -197,48 +197,29 @@
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="Quartermaster Studio home">
-      <svg class="brand-logo" viewBox="0 0 120 120" aria-hidden="true">
-        <g fill="none" stroke="#8d6b57" stroke-width="4">
-          <circle cx="60" cy="60" r="40"/>
-          <circle cx="60" cy="60" r="31" stroke-width="2.5"/>
-        </g>
-        <g fill="#8d6b57">
-          <polygon points="60,8 64,34 60,30 56,34"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(90 60 60)"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(180 60 60)"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(270 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(45 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(135 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(225 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(315 60 60)"/>
-        </g>
-        <text x="60" y="62" text-anchor="middle" dominant-baseline="central" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="600" font-size="42" fill="#8d6b57">Q</text>
-      </svg>
-      <span class="brand-word">QUARTERMASTER</span>
+      <span class="brand-logo"><img src="/assets/img/mark.svg" alt="Quartermaster Studio compass mark" width="42" height="42"></span>
+      <span class="brand-word"><span>Quartermaster</span><span>Studio</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="/" data-nav="home">Home</a>
-      <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
-      <a href="/past-events/" data-nav="past-events">Past Events</a>
-      <a href="/blog/" data-nav="blog">Blog</a>
-      <a href="/contact/" data-nav="contact">Contact</a>
-      <a href="/portal/" data-nav="portal">Portal</a>
-      <a href="/contact/" class="btn nav-cta" style="padding:10px 20px;">Reserve a Consultation</a>
+      <a href="/roi-calculator/">ROI Calculator</a>
+      <a href="/blog/">Journal</a>
+      <a href="/past-events/">Past Events</a>
+      <a href="/portal/">Portal</a>
+      <a href="/contact/" class="btn btn-primary nav-cta">Reserve a Consultation</a>
     </nav>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
-      <span></span><span></span><span></span>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="/" data-nav="home">Home</a>
-      <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
-      <a href="/past-events/" data-nav="past-events">Past Events</a>
-      <a href="/blog/" data-nav="blog">Blog</a>
-      <a href="/contact/" data-nav="contact">Contact</a>
-      <a href="/portal/" data-nav="portal">Portal</a>
-      <a href="/contact/" class="btn nav-cta">Reserve a Consultation</a>
-    </div>
   </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+    <a href="/roi-calculator/">ROI Calculator</a>
+    <a href="/blog/">Journal</a>
+    <a href="/past-events/">Past Events</a>
+    <a href="/portal/">Portal</a>
+    <a href="/contact/" class="btn btn-primary">Reserve a Consultation</a>
+  </nav>
 </header>
+
 
 <main>
   <section class="hero" style="padding-bottom:32px;">
@@ -381,7 +362,7 @@
         <div id="qmRiskbar"></div>
         <div class="legend">
           <span><span class="sw seen"></span>Hiring: likely, between best and worst case</span>
-          <span><span class="sw hidden" style="background:var(--seafoam);"></span>Bespoke agency: exact, per dinner booked</span>
+          <span><span class="sw hidden"></span>Bespoke agency: exact, per dinner booked</span>
         </div>
 
         <div class="table-scroll">
@@ -420,7 +401,7 @@
             <button type="button" class="btn" id="qmCopyWriteUp">Copy analysis</button>
             <a class="btn btn-ghost" href="/contact/">Talk it through with us</a>
           </div>
-          <p id="qmCopyNote" class="fine-print" style="display:none; color:var(--seafoam); font-weight:700;">Copied.</p>
+          <p id="qmCopyNote" class="fine-print" style="display:none; color:var(--cedar-light); font-weight:700;">Copied.</p>
         </div>
       </div>
 
@@ -469,7 +450,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=20260924f" defer></script>
-<script src="/assets/js/calculator.js?v=20260924f" defer></script>
+<script src="/assets/js/main.js?v=20260924g" defer></script>
+<script src="/assets/js/calculator.js?v=20260924g" defer></script>
 </body>
 </html>

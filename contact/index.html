@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact - Quartermaster Studio</title>
 <meta name="description" content="Initiate a project inquiry or reserve a consultation with Quartermaster Studio.">
-<link rel="stylesheet" href="/assets/css/style.css?v=20260924f">
-<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css?v=20260924g">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg?v=20260924g">
 <style>
   .inquiry-result {
     display: none;
-    background: var(--card);
-    border: 1px solid var(--line-strong);
+    background: var(--slate);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 28px;
     box-shadow: var(--shadow);
@@ -22,7 +22,7 @@
     white-space: pre-wrap;
     font-family: var(--font-body);
     font-size: 0.95rem;
-    background: var(--paper-deep);
+    background: var(--forage-deep);
     border: 1px solid var(--line);
     border-radius: 10px;
     padding: 18px;
@@ -39,7 +39,7 @@
   .next-steps .step-no {
     font-family: var(--font-display);
     font-style: italic;
-    color: var(--brass);
+    color: var(--cedar);
     font-weight: 700;
     flex: none;
   }
@@ -50,55 +50,36 @@
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="Quartermaster Studio home">
-      <svg class="brand-logo" viewBox="0 0 120 120" aria-hidden="true">
-        <g fill="none" stroke="#8d6b57" stroke-width="4">
-          <circle cx="60" cy="60" r="40"/>
-          <circle cx="60" cy="60" r="31" stroke-width="2.5"/>
-        </g>
-        <g fill="#8d6b57">
-          <polygon points="60,8 64,34 60,30 56,34"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(90 60 60)"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(180 60 60)"/>
-          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(270 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(45 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(135 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(225 60 60)"/>
-          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(315 60 60)"/>
-        </g>
-        <text x="60" y="62" text-anchor="middle" dominant-baseline="central" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="600" font-size="42" fill="#8d6b57">Q</text>
-      </svg>
-      <span class="brand-word">QUARTERMASTER</span>
+      <span class="brand-logo"><img src="/assets/img/mark.svg" alt="Quartermaster Studio compass mark" width="42" height="42"></span>
+      <span class="brand-word"><span>Quartermaster</span><span>Studio</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="/" data-nav="home">Home</a>
-      <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
-      <a href="/past-events/" data-nav="past-events">Past Events</a>
-      <a href="/blog/" data-nav="blog">Blog</a>
-      <a href="/contact/" data-nav="contact">Contact</a>
-      <a href="/portal/" data-nav="portal">Portal</a>
-      <a href="/contact/" class="btn nav-cta" style="padding:10px 20px;">Reserve a Consultation</a>
+      <a href="/roi-calculator/">ROI Calculator</a>
+      <a href="/blog/">Journal</a>
+      <a href="/past-events/">Past Events</a>
+      <a href="/portal/">Portal</a>
+      <a href="/contact/" class="btn btn-primary nav-cta">Reserve a Consultation</a>
     </nav>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
-      <span></span><span></span><span></span>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="/" data-nav="home">Home</a>
-      <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
-      <a href="/past-events/" data-nav="past-events">Past Events</a>
-      <a href="/blog/" data-nav="blog">Blog</a>
-      <a href="/contact/" data-nav="contact">Contact</a>
-      <a href="/portal/" data-nav="portal">Portal</a>
-      <a href="/contact/" class="btn nav-cta">Reserve a Consultation</a>
-    </div>
   </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+    <a href="/roi-calculator/">ROI Calculator</a>
+    <a href="/blog/">Journal</a>
+    <a href="/past-events/">Past Events</a>
+    <a href="/portal/">Portal</a>
+    <a href="/contact/" class="btn btn-primary">Reserve a Consultation</a>
+  </nav>
 </header>
+
 
 <main>
   <section class="hero" style="padding-bottom:40px;">
     <div class="wrap" style="max-width:800px;">
       <span class="kicker">Initiate a project inquiry</span>
       <h1>Tell us about the room</h1>
-      <p class="lede">Provide preliminary information, and a specialist will respond with a comprehensive overview of possible collaborations. The more specific you are, the sharper our first note back.</p>
+      <p class="lede">Tell us the outcome you want and the guest list you need. We will reply with the number: what the dinner costs, what we charge, and whether we are the right quartermaster for it.</p>
     </div>
   </section>
 
@@ -153,13 +134,13 @@
 
         <div class="inquiry-result" id="inquiry-result" aria-live="polite">
           <h3>Your inquiry brief is ready</h3>
-          <p style="color:var(--text-muted); font-size:0.95rem;">Copy it and send it our way. We respond to every inquiry personally.</p>
+          <p style="color:var(--cloud-faint); font-size:0.95rem;">Copy it and send it our way. We respond to every inquiry personally.</p>
           <pre id="brief-text"></pre>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
             <button type="button" class="btn" id="copy-brief">Copy brief</button>
             <a class="btn btn-ghost" id="mailto-brief" href="#">Open in email</a>
           </div>
-          <p id="copy-note" style="font-size:0.9rem; color:var(--seafoam); font-weight:700; margin-top:12px; display:none;">Copied. We will take it from here.</p>
+          <p id="copy-note" style="font-size:0.9rem; color:var(--cedar-light); font-weight:700; margin-top:12px; display:none;">Copied. We will take it from here.</p>
         </div>
       </div>
 
@@ -167,11 +148,11 @@
         <div class="card">
           <div class="no">What happens next</div>
           <h3>Reserve a consultation</h3>
-          <p>A structured meeting enables the team to evaluate requirements, propose tailored strategies, and outline deliverables.</p>
+          <p>One meeting. We learn the objective and the guest list, then quote the dinner.</p>
           <ul class="next-steps">
             <li><span class="step-no">1.</span><span><strong>You send the brief.</strong> Copy it from the form and email it over.</span></li>
-            <li><span class="step-no">2.</span><span><strong>We reply with a note.</strong> A specialist responds with first thoughts on market, format, and fit.</span></li>
-            <li><span class="step-no">3.</span><span><strong>We meet.</strong> A working session on objectives, guest list, and what the room needs to do.</span></li>
+            <li><span class="step-no">2.</span><span><strong>We reply with the number.</strong> First thoughts on room, format, and cost.</span></li>
+            <li><span class="step-no">3.</span><span><strong>We meet.</strong> Objectives, guest list, and what the room needs to do.</span></li>
           </ul>
         </div>
         <div class="card" style="margin-top:22px;">
@@ -226,7 +207,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=20260924f" defer></script>
-<script src="/assets/js/contact.js?v=20260924f" defer></script>
+<script src="/assets/js/main.js?v=20260924g" defer></script>
+<script src="/assets/js/contact.js?v=20260924g" defer></script>
 </body>
 </html>
