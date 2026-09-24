@@ -1,0 +1,81 @@
+name: Deploy to quartermasterstudio.leontang.ca
+
+# Deploys ONLY to the quartermasterstudio.leontang.ca subdomain.
+# The target directory is pinned in SUBDOMAIN_DOCROOT below and guarded:
+# the run aborts instead of deploying anywhere that does not look like
+# this subdomain. Nothing else on the server is touched.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: quartermasterstudio-deploy
+  cancel-in-progress: false
+
+env:
+  # Document root of the quartermasterstudio.leontang.ca subdomain on Hostinger.
+  # Verify in hPanel: Domains -> Subdomains (the "Directory" column).
+  # Must contain "quartermasterstudio" or the deploy refuses to run.
+  SUBDOMAIN_DOCROOT: /home/u718027464/domains/leontang.ca/public_html/quartermasterstudio
+  SSH_PORT: "65002"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble deploy package
+        run: |
+          rm -rf deploy-pkg site.tar.gz
+          mkdir -p deploy-pkg
+          # Ship the repo as-is, minus git metadata and the workflow itself.
+          # (If this becomes a built app later, add the build step here and
+          # copy the build output into deploy-pkg instead of the raw tree.)
+          tar --exclude='./.git' --exclude='./.github' --exclude='.git' --exclude='.github' \
+            -cf - -C "$GITHUB_WORKSPACE" . | tar -xf - -C deploy-pkg
+          tar -czf site.tar.gz -C deploy-pkg .
+          echo "Deploy package contents:"
+          tar -tzf site.tar.gz | head -40
+
+      - name: Copy archive to server over SSH
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ env.SSH_PORT }}
+          source: "site.tar.gz"
+          target: "~/"
+
+      - name: Extract into the subdomain document root
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ env.SSH_PORT }}
+          script: |
+            DOCROOT="${{ env.SUBDOMAIN_DOCROOT }}"
+            # Paranoia guard: refuse to deploy anywhere that is not this subdomain.
+            case "$DOCROOT" in
+              *quartermasterstudio*) ;;
+              *) echo "REFUSING TO DEPLOY: docroot does not look like the quartermasterstudio subdomain: $DOCROOT"; exit 1 ;;
+            esac
+            if [ ! -d "$DOCROOT" ]; then
+              echo "ERROR: subdomain document root not found: $DOCROOT"
+              echo "Check hPanel: Domains -> Subdomains (Directory column) and update SUBDOMAIN_DOCROOT."
+              echo "Existing domains:"
+              ls "$HOME/domains" || true
+              echo "leontang.ca public_html contents:"
+              ls "$HOME/domains/leontang.ca/public_html" || true
+              exit 1
+            fi
+            tar -xzf "$HOME/site.tar.gz" -C "$DOCROOT"
+            rm -f "$HOME/site.tar.gz"
+            find "$DOCROOT" -type d -exec chmod 755 {} +
+            find "$DOCROOT" -type f -exec chmod 644 {} +
+            echo "Deployed to $DOCROOT:"
+            ls -la "$DOCROOT" | head -20
