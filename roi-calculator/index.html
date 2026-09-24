@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROI Calculator - Quartermaster Studio</title>
+<meta name="description" content="In-house hire or one number per dinner? Put your own figures in and see what an executive dinner program actually costs and risks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..900;1,6..12,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2316222f'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f7f2e8' text-anchor='middle' font-style='italic'%3EQ%3C/text%3E%3C/svg%3E">
+<style>
+  /* ---------- calculator components ---------- */
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 44px;
+    box-shadow: 0 1px 2px rgba(22,34,47,0.04);
+    margin-bottom: 28px;
+  }
+  .panel > h2 { margin-top: 6px; }
+
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px; margin-top: 28px; }
+  .calc-grid .full { grid-column: 1 / -1; }
+
+  .money-field { position: relative; }
+  .money-field > span {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    font-weight: 800; color: var(--text-muted);
+  }
+  .money-field input { padding-left: 34px !important; font-weight: 700; }
+
+  .slider-block { margin-bottom: 6px; }
+  .slider-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .slider-head label { font-weight: 800; color: var(--ink); }
+  .slider-head .range-val { font-family: var(--font-display); font-size: 1.5rem; font-weight: 650; color: var(--brass); }
+  .slider-hint { font-size: 0.9rem; color: var(--text-muted); margin: 2px 0 10px; }
+
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 34px; background: transparent; cursor: pointer; margin: 0;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px; border-radius: 999px;
+    background: linear-gradient(to right, var(--brass) 0%, var(--brass) var(--fill,50%), var(--paper-deep) var(--fill,50%), var(--paper-deep) 100%);
+    border: 1px solid var(--line-strong);
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--ink); border: 3px solid var(--paper);
+    box-shadow: 0 1px 4px rgba(22,34,47,0.35);
+    margin-top: -9px;
+  }
+  input[type="range"]::-moz-range-track {
+    height: 6px; border-radius: 999px; background: var(--paper-deep);
+    border: 1px solid var(--line-strong);
+  }
+  input[type="range"]::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--brass); }
+  input[type="range"]::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ink); border: 3px solid var(--paper);
+    box-shadow: 0 1px 4px rgba(22,34,47,0.35);
+  }
+
+  .basis-line {
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px dashed var(--line-strong);
+    font-size: 0.92rem; color: var(--text-muted); font-style: italic;
+  }
+
+  /* verdict */
+  .verdict {
+    border-radius: 18px; padding: 34px 38px; margin-bottom: 28px;
+    border: 1px solid var(--line-strong);
+  }
+  .verdict-head { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 650; margin-bottom: 8px; }
+  .verdict-sub { font-size: 1.05rem; max-width: 64ch; }
+  .verdict.win { background: #eef4e6; border-color: #b9d3a5; }
+  .verdict.win .verdict-head { color: #2f5d23; }
+  .verdict.tie { background: var(--paper-deep); }
+  .verdict.lose { background: var(--ink); border-color: var(--ink); }
+  .verdict.lose .verdict-head { color: var(--paper); }
+  .verdict.lose .verdict-sub { color: #c6d0dc; }
+
+  /* tiles */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 28px; }
+  .tile {
+    border-radius: 18px; padding: 32px;
+    border: 1px solid var(--line-strong);
+  }
+  .tile .tile-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
+  .tile .tile-num { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 650; line-height: 1; margin-bottom: 12px; }
+  .tile .tile-note { font-size: 0.98rem; margin: 0; }
+  .tile.inhouse { background: var(--card); }
+  .tile.inhouse .tile-label { color: var(--brass); }
+  .tile.inhouse .tile-num { color: var(--ink); }
+  .tile.agency { background: var(--ink); border-color: var(--ink); color: #dfe5ec; }
+  .tile.agency .tile-label { color: var(--brass-bright); }
+  .tile.agency .tile-num { color: var(--paper); }
+  .tile.agency .tile-note { color: #a9b6c4; }
+
+  /* bar charts */
+  .bbar-row { display: grid; grid-template-columns: 220px 1fr 110px; gap: 18px; align-items: center; margin-bottom: 16px; }
+  .bbar-label strong { display: block; color: var(--ink); font-size: 0.98rem; }
+  .bbar-label span { font-size: 0.85rem; color: var(--text-muted); }
+  .bbar-track {
+    height: 44px; border-radius: 10px; background: var(--paper-deep);
+    border: 1px solid var(--line); overflow: hidden; position: relative;
+    display: flex;
+  }
+  .bbar-seg { height: 100%; display: flex; align-items: center; }
+  .bbar-seg.seen { background: var(--ink); }
+  .bbar-seg.hidden { background: var(--brass); justify-content: flex-end; }
+  .bbar-seg.hidden span {
+    color: #fff; font-size: 0.8rem; font-weight: 800; padding-right: 12px; white-space: nowrap;
+  }
+  .bbar-val { font-family: var(--font-display); font-weight: 650; font-size: 1.25rem; color: var(--ink); text-align: right; }
+  .bbar-foot { font-size: 0.92rem; color: var(--text-muted); font-style: italic; margin-top: 6px; }
+  .legend { display: flex; gap: 26px; flex-wrap: wrap; margin: 18px 0 4px; font-size: 0.92rem; font-weight: 700; }
+  .legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 8px; vertical-align: -1px; }
+  .sw.seen { background: var(--ink); }
+  .sw.hidden { background: var(--brass); }
+
+  /* risk whisker */
+  .bbar-track.risk { display: block; }
+  .whisker {
+    position: absolute; top: 50%; height: 8px; transform: translateY(-50%);
+    background: repeating-linear-gradient(to right, var(--ink) 0 8px, transparent 8px 14px);
+    border-left: 3px solid var(--ink); border-right: 3px solid var(--ink);
+  }
+  .whisker-dot, .agency-dot {
+    position: absolute; top: 50%; width: 18px; height: 18px; border-radius: 50%;
+    transform: translate(-50%, -50%); border: 3px solid var(--paper);
+    box-shadow: 0 1px 4px rgba(22,34,47,0.4);
+  }
+  .whisker-dot { background: var(--brass); }
+  .agency-dot { background: var(--seafoam); }
+
+  /* risk pair */
+  .risk-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 28px 0; }
+  .risk-card { border: 1px solid var(--line-strong); border-radius: 16px; padding: 28px; background: var(--paper); }
+  .risk-card .rc-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .risk-card .rc-num { font-family: var(--font-display); font-size: clamp(2rem, 3.6vw, 2.7rem); font-weight: 650; color: var(--ink); line-height: 1; margin-bottom: 10px; }
+  .risk-card .rc-note { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
+  .risk-card.agency-card { background: var(--ink); border-color: var(--ink); }
+  .risk-card.agency-card .rc-label { color: var(--brass-bright); }
+  .risk-card.agency-card .rc-num { color: var(--paper); }
+  .risk-card.agency-card .rc-note { color: #a9b6c4; }
+
+  /* tables */
+  .table-scroll { overflow-x: auto; margin-top: 24px; border: 1px solid var(--line); border-radius: 14px; }
+  table.qmtable { width: 100%; border-collapse: collapse; font-size: 0.96rem; min-width: 640px; background: #fff; }
+  table.qmtable th {
+    text-align: left; font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-muted); padding: 14px 18px; border-bottom: 2px solid var(--line-strong);
+    background: var(--paper); white-space: nowrap;
+  }
+  table.qmtable td { padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.qmtable td.num { font-weight: 800; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.qmtable td.where { color: var(--text-muted); font-size: 0.9rem; }
+  table.qmtable tr.subtotal td { background: var(--paper-deep); font-weight: 700; }
+  table.qmtable tr.total td { background: var(--ink); color: var(--paper); border-bottom: none; }
+  table.qmtable tr.total td.num { color: var(--paper); }
+  table.qmtable tr.total td.where { color: #a9b6c4; }
+  .row-note { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 400; margin-top: 4px; }
+
+  .honest-note {
+    margin-top: 24px; padding: 20px 24px;
+    border-left: 3px solid var(--brass); background: var(--paper);
+    border-radius: 0 12px 12px 0; font-size: 0.98rem;
+  }
+
+  /* lead capture */
+  .lead-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 14px; align-items: end; margin-top: 24px; }
+  .lead-msg { font-weight: 700; margin-top: 14px; display: none; }
+  .lead-msg.bad { display: block; color: #a33b2e; }
+  .lead-msg.good { display: block; color: var(--seafoam); }
+  .fine-print { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-top: 14px; }
+  #qmWriteUp { margin-top: 24px; }
+  #qmWriteUp pre {
+    white-space: pre-wrap; font-family: var(--font-body); font-size: 0.95rem;
+    background: var(--paper-deep); border: 1px solid var(--line-strong);
+    border-radius: 12px; padding: 24px; line-height: 1.7;
+  }
+
+  @media (max-width: 860px) {
+    .panel { padding: 28px 22px; }
+    .calc-grid, .tiles, .risk-pair { grid-template-columns: 1fr; }
+    .bbar-row { grid-template-columns: 1fr; gap: 8px; }
+    .bbar-val { text-align: left; }
+    .lead-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Quartermaster Studio home">
+      <span class="brand-mark">Q</span>
+      <span class="brand-name">Quartermaster<small>Studio</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/" data-nav="home">Home</a>
+      <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
+      <a href="/contact/" data-nav="contact">Contact</a>
+      <a href="/contact/" class="btn" style="padding:10px 20px;">Reserve a Consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="padding-bottom:32px;">
+    <div class="wrap" style="max-width:820px;">
+      <span class="kicker">Executive Dinner Programs</span>
+      <h1>ROI Calculator</h1>
+      <p class="lede">In-house means a hire, a ramp and a year of salary before the first guest sits down. An agency means one number per dinner. Put your own figures in.</p>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:16px;">
+    <div class="wrap">
+
+      <!-- YOUR NUMBERS -->
+      <div class="panel">
+        <span class="kicker">Your numbers</span>
+        <h2>What the program costs you today</h2>
+        <div class="calc-grid">
+          <div class="field">
+            <label for="qmFm">Field Marketing Manager Base Salary</label>
+            <div class="money-field"><span>$</span><input type="number" id="qmFm" value="190000" min="0" step="5000" inputmode="numeric"></div>
+          </div>
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmShareFm">Share of their month one dinner eats</label><span class="range-val" id="qmShareFmOut">50%</span></div>
+            <input type="range" id="qmShareFm" min="5" max="100" step="5" value="50">
+            <p class="slider-hint">Venue sourcing, vendor calls, run-of-show, confirmations, no-show chasing, on-site.</p>
+          </div>
+          <div class="field">
+            <label for="qmSdr">Sales Base Salary</label>
+            <div class="money-field"><span>$</span><input type="number" id="qmSdr" value="120000" min="0" step="5000" inputmode="numeric"></div>
+          </div>
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmShareSdr">Share of their month one dinner eats</label><span class="range-val" id="qmShareSdrOut">50%</span></div>
+            <input type="range" id="qmShareSdr" min="5" max="100" step="5" value="50">
+            <p class="slider-hint">Invite list build, outreach sequencing, follow-up.</p>
+          </div>
+          <div class="field full">
+            <label for="qmTier">Engagement tier</label>
+            <select id="qmTier">
+              <option value="15000|0">In-market, no overnight: $15,000</option>
+              <option value="17000|1400" selected>Regional, one overnight: $17,000</option>
+              <option value="19500|2400">National, two or more nights: $19,500</option>
+            </select>
+          </div>
+          <div class="full">
+            <button type="button" class="btn btn-ghost" id="qmReset">Reset</button>
+          </div>
+        </div>
+        <p class="basis-line">Modelled on a two-dinner-a-month program, 20 guests, and $13,000 of venue, food, AV, print and gifting per night at California loaded (Employer Taxes) rates.</p>
+      </div>
+
+      <!-- VERDICT -->
+      <div class="verdict" id="qmVerdict" aria-live="polite">
+        <div class="verdict-head" id="qmVHead"></div>
+        <div class="verdict-sub" id="qmVSub"></div>
+      </div>
+
+      <!-- TILES -->
+      <div class="tiles">
+        <div class="tile inhouse">
+          <div class="tile-label">Running it in-house</div>
+          <div class="tile-num" id="qmInNum"></div>
+          <p class="tile-note" id="qmInNote"></p>
+        </div>
+        <div class="tile agency">
+          <div class="tile-label">Bespoke event agency</div>
+          <div class="tile-num" id="qmMeNum"></div>
+          <p class="tile-note" id="qmMeNote"></p>
+        </div>
+      </div>
+
+      <!-- BUDGET VS TRUE COST -->
+      <div class="panel">
+        <span class="kicker">The real number</span>
+        <h2>What the event budget shows, and what the night costs</h2>
+        <p class="lede" id="qmBarLede"></p>
+        <div id="qmBar" style="margin-top:26px;"></div>
+        <div class="legend">
+          <span><span class="sw seen"></span>In the event budget</span>
+          <span><span class="sw hidden"></span>In payroll, never re-aggregated</span>
+        </div>
+      </div>
+
+      <!-- WHERE THE MONEY GOES -->
+      <div class="panel">
+        <span class="kicker">Line by line</span>
+        <h2>Where the money actually goes</h2>
+        <p class="lede" id="qmStackLede"></p>
+        <div class="table-scroll">
+          <table class="qmtable">
+            <thead><tr><th>Cost line</th><th>In-house</th><th>Bespoke agency</th><th>Whose budget it lands in</th></tr></thead>
+            <tbody id="qmStackRows"></tbody>
+          </table>
+        </div>
+        <div class="honest-note"><strong>One honest note:</strong> this compares labour to labour. Venue, food, AV and gifting are paid either way: and you hold those contracts directly, so you keep the pricing leverage and nothing is marked up. The saving is on the people, not on the program.</div>
+      </div>
+
+      <!-- RISK -->
+      <div class="panel">
+        <span class="kicker">The part nobody budgets</span>
+        <h2>What you are actually risking</h2>
+        <p class="lede">A bespoke agency exposes you to one number: the fee per dinner you book. A hire exposes you to a range, and the bottom of that range is not zero. Even a hire who works out costs you the search and the ramp before the first guest sits down.</p>
+
+        <div class="calc-grid" style="margin-top:28px;">
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmHireMonths">Months to fill the role</label><span class="range-val" id="qmHireMonthsOut">3</span></div>
+            <input type="range" id="qmHireMonths" min="1" max="9" step="1" value="3">
+          </div>
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmFirstDinnerWeeks">Weeks after they start before they can run a dinner</label><span class="range-val" id="qmFirstDinnerWeeksOut">6</span></div>
+            <input type="range" id="qmFirstDinnerWeeks" min="1" max="16" step="1" value="6">
+          </div>
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmRampMonths">Months to full productivity</label><span class="range-val" id="qmRampMonthsOut">3</span></div>
+            <input type="range" id="qmRampMonths" min="0" max="12" step="1" value="3">
+          </div>
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmFailPct">Chance the hire does not work out</label><span class="range-val" id="qmFailPctOut">35%</span></div>
+            <input type="range" id="qmFailPct" min="0" max="70" step="5" value="35">
+          </div>
+          <div class="slider-block">
+            <div class="slider-head"><label for="qmRecruitPct">Recruiting fee, share of base</label><span class="range-val" id="qmRecruitPctOut">20%</span></div>
+            <input type="range" id="qmRecruitPct" min="0" max="35" step="5" value="20">
+          </div>
+        </div>
+
+        <div class="risk-pair">
+          <div class="risk-card">
+            <div class="rc-label">At risk with a hire, likely</div>
+            <div class="rc-num" id="qmRiskHireNum"></div>
+            <p class="rc-note" id="qmRiskHireNote"></p>
+          </div>
+          <div class="risk-card agency-card">
+            <div class="rc-label">At risk with a bespoke agency, exactly</div>
+            <div class="rc-num" id="qmRiskAgencyNum"></div>
+            <p class="rc-note" id="qmRiskAgencyNote"></p>
+          </div>
+        </div>
+
+        <div id="qmRiskbar"></div>
+        <div class="legend">
+          <span><span class="sw seen"></span>Hiring: likely, between best and worst case</span>
+          <span><span class="sw hidden" style="background:var(--seafoam);"></span>Bespoke agency: exact, per dinner booked</span>
+        </div>
+
+        <div class="table-scroll">
+          <table class="qmtable">
+            <thead><tr><th>What you are exposed to</th><th>Hiring</th><th>Bespoke agency</th></tr></thead>
+            <tbody id="qmRiskRows"></tbody>
+          </table>
+        </div>
+        <div class="honest-note" id="qmRiskNote"></div>
+      </div>
+
+      <!-- CTA -->
+      <div class="panel">
+        <span class="kicker">Next step</span>
+        <h2>Want this written up with your numbers?</h2>
+        <p class="lede">We will send the analysis back with your figures in it, plus a short note on which market and format we would run first.</p>
+        <form id="qmLeadForm" novalidate>
+          <div class="lead-grid">
+            <div class="field" style="margin:0;">
+              <label for="qmLeadEmail">Work email</label>
+              <input type="email" id="qmLeadEmail" placeholder="Work email" autocomplete="email">
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="qmLeadCompany">Company</label>
+              <input type="text" id="qmLeadCompany" placeholder="Company" autocomplete="organization">
+            </div>
+            <div><button type="submit" class="btn btn-brass">Send it over</button></div>
+          </div>
+          <p class="lead-msg" id="qmLeadMsg" aria-live="polite"></p>
+          <p class="fine-print">Your figures are used to prepare that note and nothing else.</p>
+        </form>
+        <div id="qmWriteUp" style="display:none;">
+          <h3>Your analysis, with your numbers in it</h3>
+          <pre id="qmWriteUpText"></pre>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
+            <button type="button" class="btn" id="qmCopyWriteUp">Copy analysis</button>
+            <a class="btn btn-ghost" href="/contact/">Talk it through with us</a>
+          </div>
+          <p id="qmCopyNote" class="fine-print" style="display:none; color:var(--seafoam); font-weight:700;">Copied.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Quartermaster Studio</div>
+        <p style="font-size:0.95rem; max-width:34ch;">Executive dinners and private events, provisioned down to the last detail.</p>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/roi-calculator/">ROI Calculator</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/#services">Full-Service Planning</a></li>
+          <li><a href="/#services">Venue Sourcing</a></li>
+          <li><a href="/#services">On-Site Coordination</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Begin</h4>
+        <ul>
+          <li><a href="/contact/">Reserve a Consultation</a></li>
+          <li><a href="/roi-calculator/">Run Your Numbers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span data-year>2026</span> Quartermaster Studio. All rights reserved.</span>
+      <span>Provisioned with care.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/calculator.js" defer></script>
+</body>
+</html>

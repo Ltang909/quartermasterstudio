@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Quartermaster Studio</title>
+<meta name="description" content="Initiate a project inquiry or reserve a consultation with Quartermaster Studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..900;1,6..12,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2316222f'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f7f2e8' text-anchor='middle' font-style='italic'%3EQ%3C/text%3E%3C/svg%3E">
+<style>
+  .inquiry-result {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    margin-top: 8px;
+  }
+  .inquiry-result.show { display: block; }
+  .inquiry-result pre {
+    white-space: pre-wrap;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    background: var(--paper-deep);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 16px 0;
+  }
+  .next-steps { list-style: none; margin: 24px 0 0; padding: 0; }
+  .next-steps li {
+    display: flex; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.98rem;
+  }
+  .next-steps li:last-child { border-bottom: none; }
+  .next-steps .step-no {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--brass);
+    font-weight: 700;
+    flex: none;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Quartermaster Studio home">
+      <span class="brand-mark">Q</span>
+      <span class="brand-name">Quartermaster<small>Studio</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/" data-nav="home">Home</a>
+      <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
+      <a href="/contact/" data-nav="contact">Contact</a>
+      <a href="/contact/" class="btn" style="padding:10px 20px;">Reserve a Consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="padding-bottom:40px;">
+    <div class="wrap" style="max-width:800px;">
+      <span class="kicker">Initiate a project inquiry</span>
+      <h1>Tell us about the room</h1>
+      <p class="lede">Provide preliminary information, and a specialist will respond with a comprehensive overview of possible collaborations. The more specific you are, the sharper our first note back.</p>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:24px;">
+    <div class="wrap split" style="align-items:start;">
+      <div>
+        <form id="inquiry-form" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Your name</label>
+              <input type="text" id="f-name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-email">Work email</label>
+              <input type="email" id="f-email" name="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-company">Company</label>
+              <input type="text" id="f-company" name="company" autocomplete="organization">
+            </div>
+            <div class="field">
+              <label for="f-type">What are you planning?</label>
+              <select id="f-type" name="type">
+                <option>Executive dinner program</option>
+                <option>Single executive dinner</option>
+                <option>Private event</option>
+                <option>Venue sourcing only</option>
+                <option>Full-service planning</option>
+                <option>Something else</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-date">Target date <span class="hint" style="display:inline; font-weight:400;">(rough is fine)</span></label>
+              <input type="text" id="f-date" name="date" placeholder="e.g. late October">
+            </div>
+            <div class="field">
+              <label for="f-guests">Guest count</label>
+              <input type="number" id="f-guests" name="guests" min="1" max="500" placeholder="e.g. 20">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">What should we know?</label>
+            <textarea id="f-msg" name="message" rows="5" placeholder="The objective, the audience, the city, anything that matters."></textarea>
+            <span class="hint">Objectives beat logistics at this stage. Tell us what the room needs to achieve.</span>
+          </div>
+          <button type="submit" class="btn btn-brass">Prepare my inquiry brief</button>
+        </form>
+
+        <div class="inquiry-result" id="inquiry-result" aria-live="polite">
+          <h3>Your inquiry brief is ready</h3>
+          <p style="color:var(--text-muted); font-size:0.95rem;">Copy it and send it our way. We respond to every inquiry personally.</p>
+          <pre id="brief-text"></pre>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button type="button" class="btn" id="copy-brief">Copy brief</button>
+            <a class="btn btn-ghost" id="mailto-brief" href="#">Open in email</a>
+          </div>
+          <p id="copy-note" style="font-size:0.9rem; color:var(--seafoam); font-weight:700; margin-top:12px; display:none;">Copied. We will take it from here.</p>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <div class="no">What happens next</div>
+          <h3>Reserve a consultation</h3>
+          <p>A structured meeting enables the team to evaluate requirements, propose tailored strategies, and outline deliverables.</p>
+          <ul class="next-steps">
+            <li><span class="step-no">1.</span><span><strong>You send the brief.</strong> Copy it from the form and email it over.</span></li>
+            <li><span class="step-no">2.</span><span><strong>We reply with a note.</strong> A specialist responds with first thoughts on market, format, and fit.</span></li>
+            <li><span class="step-no">3.</span><span><strong>We meet.</strong> A working session on objectives, guest list, and what the room needs to do.</span></li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:22px;">
+          <div class="no">Prefer numbers first?</div>
+          <h3>Run the ROI math</h3>
+          <p>See what an executive dinner program costs in-house versus one number per dinner with us.</p>
+          <a class="card-link" href="/roi-calculator/">Open the ROI calculator</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Quartermaster Studio</div>
+        <p style="font-size:0.95rem; max-width:34ch;">Executive dinners and private events, provisioned down to the last detail.</p>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/roi-calculator/">ROI Calculator</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/#services">Full-Service Planning</a></li>
+          <li><a href="/#services">Venue Sourcing</a></li>
+          <li><a href="/#services">On-Site Coordination</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Begin</h4>
+        <ul>
+          <li><a href="/contact/">Reserve a Consultation</a></li>
+          <li><a href="/roi-calculator/">Run Your Numbers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span data-year>2026</span> Quartermaster Studio. All rights reserved.</span>
+      <span>Provisioned with care.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/contact.js" defer></script>
+</body>
+</html>
