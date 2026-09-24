@@ -210,7 +210,7 @@
 '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
 "<title>" + esc(d.title.replace(/\*/g, "")) + " - Quartermaster Studio</title>\n" +
 '<meta name="description" content="' + esc(d.excerpt) + '">\n' +
-'<link rel="stylesheet" href="/assets/css/style.css">\n' +
+'<link rel="stylesheet" href="/assets/css/style.css?v=20260924f">\n' +
 '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">\n' +
 "</head>\n" +
 "<body>\n\n" +
