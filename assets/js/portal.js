@@ -74,7 +74,6 @@
   </div>
 </footer>`;
 
-  var FONT_LINK = "https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&display=swap";
 
   var IMG_PRESETS = [
     { id: "photo-1414235077428-338989a2e8c0", label: "Fine dining" },
@@ -209,9 +208,6 @@
 '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
 "<title>" + esc(d.title.replace(/\*/g, "")) + " - Quartermaster Studio</title>\n" +
 '<meta name="description" content="' + esc(d.excerpt) + '">\n' +
-'<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
-'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
-'<link href="' + FONT_LINK + '" rel="stylesheet">\n' +
 '<link rel="stylesheet" href="/assets/css/style.css">\n' +
 '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">\n' +
 "</head>\n" +
