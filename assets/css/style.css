@@ -518,6 +518,12 @@ footer.site {
   box-shadow: 0 0 0 3px rgba(194, 119, 95, 0.18);
 }
 .field textarea { min-height: 130px; resize: vertical; }
+.form-error {
+  color: var(--cedar-light);
+  font-size: 0.92rem;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
 .field input::placeholder, .field textarea::placeholder { color: var(--cloud-faint); }
 .brief-card h3 {
   font-family: var(--font-display);

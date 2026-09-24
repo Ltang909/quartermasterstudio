@@ -11,9 +11,9 @@
     <nav class="nav-links" aria-label="Primary">
       <a href="/" data-nav="home">Home</a>
       <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
+      <a href="/services/" data-nav="services">Services</a>
       <a href="/past-events/" data-nav="past-events">Past Events</a>
       <a href="/blog/" data-nav="blog">Blog</a>
-      <a href="/portal/" data-nav="portal">Portal</a>
       <a href="/contact/" class="btn btn-primary nav-cta">Reserve a Consultation</a>
     </nav>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -23,9 +23,9 @@
   <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
     <a href="/" data-nav="home">Home</a>
     <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
+    <a href="/services/" data-nav="services">Services</a>
     <a href="/past-events/" data-nav="past-events">Past Events</a>
     <a href="/blog/" data-nav="blog">Blog</a>
-    <a href="/portal/" data-nav="portal">Portal</a>
     <a href="/contact/" class="btn btn-primary">Reserve a Consultation</a>
   </nav>
 </header>`;
@@ -40,9 +40,9 @@
         <h4>Studio</h4>
         <a href="/">Home</a>
         <a href="/roi-calculator/">ROI Calculator</a>
+        <a href="/services/">Services</a>
         <a href="/past-events/">Past Events</a>
         <a href="/blog/">Blog</a>
-        <a href="/portal/">Portal</a>
         <a href="/contact/">Contact</a>
       </div>
       <div class="footer-links">
