@@ -150,7 +150,9 @@
         tabs.forEach(function (t) { t.classList.remove("active"); });
         tab.classList.add("active");
         document.querySelectorAll(".portal-panel").forEach(function (p) { p.classList.remove("active"); });
-        $("panel-" + tab.getAttribute("data-ptab")).classList.add("active");
+        var name = tab.getAttribute("data-ptab");
+        $("panel-" + name).classList.add("active");
+        if (name === "inquiries") renderInquiries();
       });
     });
   }
@@ -273,6 +275,54 @@ SITE_FOOTER + "\n\n" +
       "</article>";
   }
 
+  /* ---------- inquiries inbox ---------- */
+  var INQ_KEY = "qm_inquiries";
+  function getInquiries() {
+    try { return JSON.parse(localStorage.getItem(INQ_KEY) || "[]"); }
+    catch (e) { return []; }
+  }
+  function renderInquiries() {
+    var list = getInquiries();
+    var box = $("inqList");
+    if (!box) return;
+    $("inqCount").textContent = list.length ? "(" + list.length + ")" : "";
+    if (!list.length) {
+      box.innerHTML = '<div class="empty-state"><h2>No inquiries yet.</h2><p>When someone submits the contact form, their brief will appear here.</p></div>';
+      return;
+    }
+    box.innerHTML = list.map(function (q, i) {
+      var when = "";
+      try {
+        when = new Date(q.at).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+      } catch (e) {}
+      var facts = "";
+      if (q.email) facts += "<span>" + esc(q.email) + "</span>";
+      if (q.company) facts += "<span>" + esc(q.company) + "</span>";
+      if (q.type) facts += "<span>" + esc(q.type) + "</span>";
+      if (q.guests) facts += "<span>" + esc(q.guests) + " guests</span>";
+      if (q.date) facts += "<span>" + esc(q.date) + "</span>";
+      return '<article class="inq-card">' +
+        '<div class="inq-head"><div><h3>' + esc(q.name || "Unnamed") + "</h3>" +
+        (when ? '<span class="post-meta">' + esc(when) + "</span>" : "") + "</div>" +
+        '<div class="portal-actions" style="margin:0;">' +
+        '<a class="btn btn-ghost" style="padding:8px 16px;" href="mailto:' + esc(q.email || "") +
+        "?subject=" + encodeURIComponent("Re: your Quartermaster inquiry") + '">Reply</a>' +
+        '<button type="button" class="btn btn-ghost" style="padding:8px 16px;" data-del="' + i + '">Delete</button>' +
+        "</div></div>" +
+        (facts ? '<div class="event-facts">' + facts + "</div>" : "") +
+        (q.message ? '<p style="margin:0;color:var(--muted);">' + esc(q.message) + "</p>" : "") +
+        "</article>";
+    }).join("");
+    box.querySelectorAll("[data-del]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var l = getInquiries();
+        l.splice(parseInt(b.getAttribute("data-del"), 10), 1);
+        try { localStorage.setItem(INQ_KEY, JSON.stringify(l)); } catch (e) {}
+        renderInquiries();
+      });
+    });
+  }
+
   /* ---------- render ---------- */
   function render() {
     var pd = postData();
@@ -347,5 +397,6 @@ SITE_FOOTER + "\n\n" +
     });
 
     render();
+    renderInquiries();
   });
 })();

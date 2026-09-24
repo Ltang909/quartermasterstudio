@@ -27,6 +27,24 @@
     return lines.join("\n");
   }
 
+  function saveInquiry() {
+    try {
+      var key = "qm_inquiries";
+      var list = JSON.parse(localStorage.getItem(key) || "[]");
+      list.unshift({
+        name: field("f-name"),
+        email: field("f-email"),
+        company: field("f-company"),
+        type: field("f-type"),
+        date: field("f-date"),
+        guests: field("f-guests"),
+        message: field("f-msg"),
+        at: new Date().toISOString()
+      });
+      localStorage.setItem(key, JSON.stringify(list.slice(0, 200)));
+    } catch (e) { /* storage unavailable; the brief still works */ }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     var form = document.getElementById("inquiry-form");
     if (!form) return;
@@ -47,6 +65,7 @@
       }
       var brief = buildBrief();
       briefText.textContent = brief;
+      saveInquiry();
       result.classList.add("show");
       copyNote.style.display = "none";
       if (STUDIO_EMAIL) {

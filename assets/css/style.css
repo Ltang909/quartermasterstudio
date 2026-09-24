@@ -546,7 +546,6 @@ input[type="range"] {
   .manifest-row .m-tag { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 640px) {
-  .nav-links a:not(.btn) { display: none; }
   .field-row { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
@@ -662,3 +661,77 @@ input[type="range"] {
   .portal-grid { grid-template-columns: 1fr; }
   .portal-side { position: static; }
 }
+
+/* ---------- mobile nav ---------- */
+.nav-toggle {
+  display: none;
+  background: #fffdf8;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex: none;
+}
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu { display: none; }
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    padding: 8px 20px 20px;
+    z-index: 60;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu a:not(.btn) {
+    display: block;
+    padding: 13px 4px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-display);
+  }
+  .mobile-menu a:not(.btn).active { color: var(--brass-dark); }
+  .mobile-menu .btn { display: block; text-align: center; margin-top: 16px; }
+  .hero-visual { min-height: 360px; }
+  .manifest-card { top: 12px; right: 12px; padding: 10px 14px; font-size: 0.75rem; }
+}
+
+/* ---------- inquiries inbox ---------- */
+.portal-note { color: var(--muted); margin: 0 0 18px; }
+.inq-card {
+  background: #fffdf8;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.inq-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.inq-head h3 { margin: 0 0 4px; font-size: 1.2rem; }
