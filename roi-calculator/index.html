@@ -7,9 +7,9 @@
 <meta name="description" content="In-house hire or one number per dinner? Put your own figures in and see what an executive dinner program actually costs and risks.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..900;1,6..12,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2316222f'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f7f2e8' text-anchor='middle' font-style='italic'%3EQ%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <style>
   /* ---------- calculator components ---------- */
   .panel {
@@ -200,14 +200,32 @@
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="Quartermaster Studio home">
-      <span class="brand-mark">Q</span>
-      <span class="brand-name">Quartermaster<small>Studio</small></span>
+      <svg class="brand-logo" viewBox="0 0 120 120" aria-hidden="true">
+        <g fill="none" stroke="#8d6b57" stroke-width="4">
+          <circle cx="60" cy="60" r="40"/>
+          <circle cx="60" cy="60" r="31" stroke-width="2.5"/>
+        </g>
+        <g fill="#8d6b57">
+          <polygon points="60,8 64,34 60,30 56,34"/>
+          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(90 60 60)"/>
+          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(180 60 60)"/>
+          <polygon points="60,8 64,34 60,30 56,34" transform="rotate(270 60 60)"/>
+          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(45 60 60)"/>
+          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(135 60 60)"/>
+          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(225 60 60)"/>
+          <polygon points="60,24 62.5,42 60,39.5 57.5,42" transform="rotate(315 60 60)"/>
+        </g>
+        <text x="60" y="62" text-anchor="middle" dominant-baseline="central" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="600" font-size="42" fill="#8d6b57">Q</text>
+      </svg>
+      <span class="brand-word">QUARTERMASTER</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/" data-nav="home">Home</a>
       <a href="/roi-calculator/" data-nav="roi-calculator">ROI Calculator</a>
+      <a href="/past-events/" data-nav="past-events">Past Events</a>
+      <a href="/blog/" data-nav="blog">Blog</a>
       <a href="/contact/" data-nav="contact">Contact</a>
-      <a href="/contact/" class="btn" style="padding:10px 20px;">Reserve a Consultation</a>
+      <a href="/contact/" class="btn nav-cta" style="padding:10px 20px;">Reserve a Consultation</a>
     </nav>
   </div>
 </header>
@@ -412,6 +430,8 @@
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/roi-calculator/">ROI Calculator</a></li>
+          <li><a href="/past-events/">Past Events</a></li>
+          <li><a href="/blog/">Blog</a></li>
           <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>

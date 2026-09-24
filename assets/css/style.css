@@ -19,7 +19,7 @@
   --radius: 14px;
   --shadow: 0 1px 2px rgba(22, 34, 47, 0.05), 0 12px 32px -12px rgba(22, 34, 47, 0.18);
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Nunito Sans", -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Fraunces", Georgia, "Times New Roman", serif;
   --maxw: 1160px;
 }
 
@@ -115,34 +115,6 @@ header.site {
   text-decoration: none;
   color: var(--ink);
 }
-.brand-mark {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--ink);
-  color: var(--paper);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-}
-.brand-name {
-  font-family: var(--font-display);
-  font-weight: 650;
-  font-size: 1.12rem;
-  letter-spacing: 0.01em;
-  line-height: 1.15;
-}
-.brand-name small {
-  display: block;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.62rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--brass);
-}
 .nav-links { display: flex; gap: 6px; align-items: center; }
 .nav-links a {
   color: var(--text);
@@ -154,6 +126,30 @@ header.site {
 }
 .nav-links a:hover { background: rgba(22, 34, 47, 0.06); color: var(--ink); }
 .nav-links a.active { background: var(--ink); color: var(--paper); }
+.nav-links a.nav-cta {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  font-weight: 800;
+}
+.nav-links a.nav-cta:hover {
+  background: var(--brass);
+  border-color: var(--brass);
+  color: #fff8e8;
+}
+
+/* ---------- brand logo (compass rose) ---------- */
+.brand-logo { width: 46px; height: 46px; flex: none; }
+.brand-word {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.26em;
+  color: var(--ink);
+  line-height: 1;
+  padding-top: 2px;
+}
+footer.site .brand-word { color: var(--paper); }
 
 .btn {
   display: inline-flex;
@@ -524,4 +520,60 @@ input[type="range"] {
   .foot-grid { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
   .quote-card { padding: 32px 24px; }
+}
+
+/* ---------- blog & past events ---------- */
+.post-grid, .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.post-card, .event-card {
+  background: #fffdf8;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.post-card:hover, .event-card:hover { transform: translateY(-3px); }
+.post-card img, .event-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+.post-card .body, .event-card .body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.post-meta { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.post-card h3, .event-card h3 { font-size: 1.35rem; line-height: 1.25; margin: 0; }
+.post-card h3 a, .event-card h3 a { color: var(--ink); text-decoration: none; }
+.post-card h3 a:hover { color: var(--brass-dark); text-decoration: underline; }
+.post-card p.excerpt { color: var(--muted); margin: 0; flex: 1; }
+.event-facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.event-facts span {
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+/* single post */
+.post-hero { max-width: 880px; margin: 0 auto; }
+.post-hero img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.prose { max-width: 700px; margin: 0 auto; font-size: 1.12rem; line-height: 1.85; }
+.prose p { margin: 0 0 1.3em; }
+.prose h2 { font-size: 1.7rem; margin: 2em 0 0.6em; }
+.prose h3 { font-size: 1.3rem; margin: 1.8em 0 0.5em; }
+.prose ul { margin: 0 0 1.3em; padding-left: 1.3em; }
+.prose li { margin-bottom: 0.5em; }
+.prose blockquote {
+  margin: 1.8em 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--brass);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+.prose .lede { font-size: 1.3rem; color: var(--ink); }
+
+@media (max-width: 900px) {
+  .post-grid, .event-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .post-grid, .event-grid { grid-template-columns: 1fr; }
 }
