@@ -20,7 +20,7 @@
 
   var TIER_NOTES = {
     15000: "We would run your first dinner in-market: no overnights, a tight guest list, one room you can repeat every month.",
-    17000: "We would start regional with one overnight: two dinners a month, twenty guests, the format this model is built on.",
+    17000: "We would start regional with one overnight: two dinners a month in a private room, the format this model is built on.",
     19500: "We would start with the national format: two or more nights, built for guests flying in from anywhere."
   };
 

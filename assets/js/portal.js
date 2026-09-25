@@ -237,7 +237,7 @@ SITE_FOOTER + "\n\n" +
   function eventData() {
     return {
       title: $("e-title").value.trim() || "Your event title",
-      guests: $("e-guests").value.trim() || "20 guests",
+      guests: $("e-guests").value.trim() || "Private guest list",
       duration: $("e-duration").value.trim() || "1 night",
       location: $("e-location").value.trim() || "New York",
       desc: $("e-desc").value.trim() || "Your description will appear here.",
