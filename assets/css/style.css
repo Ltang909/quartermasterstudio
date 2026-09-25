@@ -221,7 +221,7 @@ header.site {
   border-bottom: 1px solid var(--line-soft);
 }
 .mobile-menu a:last-of-type { border-bottom: none; }
-.mobile-menu .btn { width: 100%; margin-top: 12px; }
+.mobile-menu .btn { width: 100%; margin-top: 12px; display: flex; justify-content: center; padding: 16px 24px; }
 
 /* ---------- hero ---------- */
 .hero { padding: 72px 0 88px; position: relative; }
@@ -836,6 +836,7 @@ pre {
   .nav-links { display: none; }
   .nav-toggle { display: inline-flex; }
   .brand-lockup { height: 40px; }
+  .hero-copy h1 { font-size: 2.7rem; }
   .hero { padding: 48px 0 64px; }
   .hero-visual img { height: 340px; }
   .manifest-card { position: static; width: 100%; margin-top: 16px; }
