@@ -172,8 +172,8 @@ header.site {
   text-transform: uppercase;
 }
 .brand-word span { display: block; }
-.brand-lockup { display: block; height: 54px; width: auto; flex: none; }
-.footer-brand .brand-lockup { height: 62px; }
+.brand-lockup { display: block; height: 44px; width: auto; flex: none; }
+.footer-brand .brand-lockup { height: 50px; }
 .nav-links { display: flex; align-items: center; gap: 30px; }
 .nav-links a {
   font-family: var(--font-display);
@@ -246,9 +246,11 @@ header.site {
 .hero-note .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--taupe); flex: none; }
 .hero-visual { position: relative; }
 .hero-visual .frame {
-  border-radius: 18px;
+  border: 0;
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 32%);
+  mask-image: linear-gradient(to right, transparent 0, #000 32%);
 }
 .hero-visual img { width: 100%; height: 560px; object-fit: cover; }
 .manifest-card {
