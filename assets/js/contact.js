@@ -76,7 +76,8 @@
       } else {
         mailtoBtn.style.display = "none";
       }
-      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      form.style.display = "none";
+      revealBooking(name);
     });
 
     copyBtn.addEventListener("click", function () {
@@ -99,5 +100,54 @@
       document.body.removeChild(ta);
       done();
     }
+
+    /* Two-step flow: the calendar booking reveals only after the brief is submitted. */
+    var book = document.getElementById("book");
+    var bookConfirm = document.getElementById("book-confirm");
+    var calendlySlot = document.getElementById("calendly-slot");
+    var calendlyInit = false;
+    if (book) book.hidden = true;
+
+    function initCalendly() {
+      if (calendlyInit || !calendlySlot) return;
+      calendlyInit = true;
+      calendlySlot.innerHTML = "";
+      var tries = 0;
+      (function attempt() {
+        if (window.Calendly && window.Calendly.initInlineWidget) {
+          window.Calendly.initInlineWidget({
+            url: "https://calendly.com/ltang9090/30min",
+            parentElement: calendlySlot
+          });
+        } else if (tries++ < 20) {
+          setTimeout(attempt, 300);
+        } else {
+          calendlySlot.innerHTML = '<p><a class="card-link" href="https://calendly.com/ltang9090/30min">Book directly on Calendly</a></p>';
+        }
+      })();
+    }
+
+    function revealBooking(name) {
+      if (!book) return;
+      book.hidden = false;
+      if (bookConfirm) {
+        bookConfirm.textContent = "Brief received" + (name ? ", " + name : "") + ". Now lock in your 30 minutes.";
+        bookConfirm.hidden = false;
+      }
+      initCalendly();
+      setTimeout(function () { book.scrollIntoView({ behavior: "smooth" }); }, 80);
+    }
+
+    function backToForm() {
+      if (book) book.hidden = true;
+      result.classList.remove("show");
+      form.style.display = "";
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    var edit1 = document.getElementById("edit-details");
+    if (edit1) edit1.addEventListener("click", function (ev) { ev.preventDefault(); backToForm(); });
+    var edit2 = document.getElementById("edit-details-2");
+    if (edit2) edit2.addEventListener("click", function (ev) { ev.preventDefault(); backToForm(); });
   });
 })();

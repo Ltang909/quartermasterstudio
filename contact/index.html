@@ -29,6 +29,17 @@
     padding: 18px;
     margin: 16px 0;
   }
+  [hidden] { display: none !important; }
+  .step-kicker { display: inline-flex; margin-bottom: 18px; }
+  #book-confirm {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cloud);
+    margin: 0 0 20px;
+  }
+  .step-links { margin-top: 18px; font-size: 0.95rem; }
+  .step-links a { color: var(--cedar-light); }
   .next-steps { list-style: none; margin: 24px 0 0; padding: 0; }
   .next-steps li {
     display: flex; gap: 14px;
@@ -88,6 +99,7 @@
   <section class="block" style="padding-top:24px;">
     <div class="wrap split" style="align-items:start;">
       <div>
+        <span class="kicker step-kicker">Step 1 of 2</span>
         <form id="inquiry-form" novalidate>
           <div class="field-row">
             <div class="field">
@@ -143,6 +155,7 @@
             <a class="btn btn-ghost" id="mailto-brief" href="#">Open in email</a>
           </div>
           <p id="copy-note" style="font-size:0.9rem; color:var(--cedar-light); font-weight:700; margin-top:12px; display:none;">Copied. We will take it from here.</p>
+          <p style="margin-top:16px;"><a href="#" id="edit-details" style="color:var(--cedar-light); font-size:0.95rem;">Edit your details</a></p>
         </div>
       </div>
 
@@ -152,11 +165,10 @@
           <h3>Reserve a consultation</h3>
           <p>One 30-minute meeting. We learn the objective and the guest list, then quote the dinner.</p>
           <ul class="next-steps">
-            <li><span class="step-no">1.</span><span><strong>You send the brief.</strong> Copy it from the form and email it over.</span></li>
-            <li><span class="step-no">2.</span><span><strong>We reply with the number.</strong> First thoughts on room, format, and cost.</span></li>
-            <li><span class="step-no">3.</span><span><strong>We meet.</strong> Objectives, guest list, and what the room needs to do.</span></li>
+            <li><span class="step-no">1.</span><span><strong>You send the brief.</strong> Two minutes, right here.</span></li>
+            <li><span class="step-no">2.</span><span><strong>You book 30 minutes.</strong> Grab a time on the calendar.</span></li>
+            <li><span class="step-no">3.</span><span><strong>We quote the dinner.</strong> One fixed number, quoted up front.</span></li>
           </ul>
-          <p style="margin-top:18px;"><a class="card-link" href="#book">Book the 30 minutes directly</a></p>
         </div>
         <div class="card" style="margin-top:22px;">
           <div class="no">Prefer numbers first?</div>
@@ -170,13 +182,15 @@
 
   <section class="block" id="book">
     <div class="wrap">
-      <span class="kicker">Skip the form</span>
+      <span class="kicker">Step 2 of 2</span>
       <h2>Book a 30-minute meeting</h2>
       <p class="lede">Prefer to talk it through? Grab 30 minutes on the calendar. We will cover the objective, the guest list, and whether we are the right quartermaster for the room.</p>
-      <!-- Calendly inline widget begin -->
-      <div class="calendly-inline-widget" data-url="https://calendly.com/ltang9090/30min" style="min-width:320px;height:700px;"></div>
+      <p id="book-confirm" hidden></p>
+      <div id="calendly-slot" style="min-width:320px;min-height:700px;">
+        <p><a class="card-link" href="https://calendly.com/ltang9090/30min">Book directly on Calendly</a></p>
+      </div>
       <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      <!-- Calendly inline widget end -->
+      <p class="step-links"><a href="#inquiry-result" id="back-to-brief">&larr; Back to your brief</a> &nbsp;&middot;&nbsp; <a href="#" id="edit-details-2">Edit your details</a></p>
     </div>
   </section>
 </main>
@@ -223,6 +237,6 @@
 </footer>
 
 <script src="/assets/js/main.js?v=20260924g" defer></script>
-<script src="/assets/js/contact.js?v=20260924g" defer></script>
+<script src="/assets/js/contact.js?v=20260925k" defer></script>
 </body>
 </html>
