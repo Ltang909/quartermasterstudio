@@ -366,6 +366,11 @@ header.site {
   margin-bottom: 10px;
 }
 .stat-label { font-size: 0.9rem; color: var(--cloud-faint); }
+/* vertical stack variant: number over caption, continuous divider */
+.stats-stack { display: flex; flex-direction: column; }
+.stats-stack .stat { margin: 0; padding: 24px 0 24px 30px; }
+.stats-stack .stat:first-child { padding-top: 0; }
+.stats-stack .stat:last-child { padding-bottom: 0; }
 
 /* ---------- calculator teaser ---------- */
 .calc-teaser {
