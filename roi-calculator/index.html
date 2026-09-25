@@ -155,14 +155,15 @@
     color: var(--cloud-faint); padding: 14px 18px; border-bottom: 2px solid var(--line);
     background: var(--forage); white-space: nowrap;
   }
-  table.qmtable td { padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  table.qmtable td.num { font-weight: 800; color: var(--cloud); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  table.qmtable td.where { color: var(--cloud-faint); font-size: 0.9rem; }
-  table.qmtable tr.subtotal td { background: var(--forage-deep); font-weight: 700; }
+  table.qmtable td { padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--forage); }
+  table.qmtable td.num { font-weight: 800; color: var(--forage); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.qmtable td.where { color: var(--taupe); font-size: 0.9rem; }
+  table.qmtable tr.subtotal td { background: var(--forage-deep); font-weight: 700; color: var(--cloud); }
+  table.qmtable tr.subtotal .row-note { color: var(--cloud-dim); }
   table.qmtable tr.total td { background: var(--forage-deep); color: var(--cloud); border-bottom: none; }
   table.qmtable tr.total td.num { color: var(--cedar-light); }
   table.qmtable tr.total td.where { color: var(--cloud-faint); }
-  .row-note { display: block; font-size: 0.85rem; color: var(--cloud-faint); font-weight: 400; margin-top: 4px; }
+  .row-note { display: block; font-size: 0.85rem; color: var(--taupe); font-weight: 400; margin-top: 4px; }
 
   .honest-note {
     margin-top: 24px; padding: 20px 24px;
