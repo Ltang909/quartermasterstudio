@@ -195,27 +195,34 @@
     var tierNote = TIER_NOTES[m.fee] || TIER_NOTES[17000];
     var today = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     return "" +
-      "<h1>Quartermaster Studio</h1>" +
-      "<p class=\"ps-sub\">Executive dinner program, cost and risk analysis. Prepared " + esc(today) + ".</p>" +
+      "<div class=\"ps-masthead\">" +
+      "<p class=\"ps-brand\">Quartermaster Studio</p>" +
+      "<p class=\"ps-doc\">Executive event program &mdash; cost &amp; risk analysis</p>" +
+      "<p class=\"ps-date\">Prepared " + esc(today) + " &nbsp;&middot;&nbsp; quartermasterstudio.leontang.ca</p>" +
+      "</div>" +
+      "<div class=\"ps-verdict-box\">" +
+      "<p class=\"ps-kicker\">The bottom line</p>" +
       "<p class=\"ps-verdict\">" + esc(verdict) + "</p>" +
+      "</div>" +
       "<h2>The night itself</h2>" +
       "<table>" +
       "<tr><td>One night on the event line</td><td class=\"num\">" + esc(usd(m.budgetLine)) + "</td></tr>" +
       "<tr><td>True loaded cost, in-house</td><td class=\"num\">" + esc(usd(m.trueCost)) + "</td></tr>" +
       "<tr><td>Of which: people and overhead</td><td class=\"num\">" + esc(usd(m.labourPer)) + "</td></tr>" +
-      "<tr><td>Same night with Quartermaster (" + esc(usd(m.fee)) + " fixed)</td><td class=\"num\">" + esc(usd(m.withMe)) + "</td></tr>" +
+      "<tr class=\"hl\"><td>Same night with Quartermaster (" + esc(usd(m.fee)) + " fixed)</td><td class=\"num\">" + esc(usd(m.withMe)) + "</td></tr>" +
       "</table>" +
       "<h2>The hiring risk</h2>" +
       "<table>" +
       "<tr><td>Sunk even when the hire works out</td><td class=\"num\">" + esc(usd(m.riskBest)) + "</td></tr>" +
       "<tr><td>Exposure if the hire does not (" + Math.round(m.failPct * 100) + "%)</td><td class=\"num\">" + esc(usd(m.riskWorst)) + "</td></tr>" +
-      "<tr><td>Risk-weighted, before a single guest sits down</td><td class=\"num\">" + esc(usd(m.riskLikely)) + "</td></tr>" +
+      "<tr class=\"hl\"><td>Risk-weighted, before a single guest sits down</td><td class=\"num\">" + esc(usd(m.riskLikely)) + "</td></tr>" +
       "<tr><td>Weeks to a first comparable dinner</td><td class=\"num\">" + m.weeksToFirst + " vs " + AGENCY_WEEKS + "</td></tr>" +
       "</table>" +
       "<h2>Where we would start</h2>" +
       "<p>" + esc(tierNote) + "</p>" +
-      "<div class=\"ps-note\"><p style=\"margin:0;\"><strong>One honest note:</strong> this compares labour to labour. Venue, food, AV and gifting are paid either way, and you hold those contracts directly, so you keep the pricing leverage and nothing is marked up. The saving is on the people, not on the program.</p></div>" +
-      "<p class=\"ps-foot\">quartermasterstudio.leontang.ca &mdash; figures as entered on the ROI calculator.</p>";
+      "<div class=\"ps-note\"><p><strong>One honest note:</strong> this compares labour to labour. Venue, food, AV and gifting are paid either way, and you hold those contracts directly, so you keep the pricing leverage and nothing is marked up. The saving is on the people, not on the program.</p></div>" +
+      "<p class=\"ps-signoff\">&mdash; Quartermaster Studio</p>" +
+      "<p class=\"ps-foot\">Figures as entered on the ROI calculator. This is an estimate for planning, not a quote.</p>";
   }
 
   /* ---------- render ---------- */

@@ -176,23 +176,33 @@
   #qmPrintSheet { display: none; }
 
   @media print {
+    @page { margin: 18mm 16mm; }
     body > :not(#qmPrintSheet) { display: none !important; }
     #qmPrintSheet {
       display: block !important;
-      color: #191919;
+      color: #20211f;
       font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-      padding: 24px 8px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
-    #qmPrintSheet h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: 0.04em; }
-    #qmPrintSheet .ps-sub { font-size: 13px; color: #555; margin: 0 0 20px; }
-    #qmPrintSheet h2 { font-size: 15px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
-    #qmPrintSheet .ps-verdict { font-size: 17px; font-weight: 700; margin: 0 0 6px; }
-    #qmPrintSheet p { font-size: 13px; line-height: 1.6; margin: 0 0 8px; }
-    #qmPrintSheet table { width: 100%; border-collapse: collapse; margin: 8px 0 4px; font-size: 13px; }
-    #qmPrintSheet td { padding: 7px 4px; border-bottom: 1px solid #ddd; vertical-align: top; }
-    #qmPrintSheet td.num { text-align: right; font-weight: 700; white-space: nowrap; }
-    #qmPrintSheet .ps-note { border-left: 3px solid #a35d4d; padding: 10px 14px; background: #f6f4f1; margin-top: 14px; }
-    #qmPrintSheet .ps-foot { margin-top: 26px; font-size: 11px; color: #777; }
+    #qmPrintSheet .ps-masthead { border-bottom: 2px solid #20211f; padding-bottom: 14px; margin-bottom: 22px; }
+    #qmPrintSheet .ps-brand { font-size: 13px; font-weight: 800; letter-spacing: 0.32em; margin: 0 0 6px; }
+    #qmPrintSheet .ps-doc { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+    #qmPrintSheet .ps-date { font-size: 11.5px; color: #6f6a61; margin: 0; letter-spacing: 0.04em; }
+    #qmPrintSheet .ps-kicker { font-size: 10.5px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: #a35d4d; margin: 0 0 8px; }
+    #qmPrintSheet .ps-verdict-box { background: #faf8f4; border: 1px solid #e6ded2; border-left: 4px solid #a35d4d; border-radius: 0 8px 8px 0; padding: 18px 22px; margin: 0 0 24px; }
+    #qmPrintSheet .ps-verdict { font-size: 16.5px; line-height: 1.55; font-weight: 600; margin: 0; }
+    #qmPrintSheet h2 { font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: #6f6a61; margin: 26px 0 6px; padding-bottom: 6px; border-bottom: 1px solid #e6ded2; }
+    #qmPrintSheet p { font-size: 13px; line-height: 1.65; margin: 0 0 8px; }
+    #qmPrintSheet table { width: 100%; border-collapse: collapse; margin: 4px 0 6px; font-size: 13px; }
+    #qmPrintSheet td { padding: 9px 4px; border-bottom: 1px solid #ece7dd; vertical-align: top; }
+    #qmPrintSheet td.num { text-align: right; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    #qmPrintSheet tr.hl td { font-weight: 700; }
+    #qmPrintSheet tr.hl td.num { color: #a35d4d; }
+    #qmPrintSheet .ps-note { margin-top: 18px; padding: 14px 18px; background: #faf8f4; border: 1px solid #e6ded2; border-radius: 8px; }
+    #qmPrintSheet .ps-note p { margin: 0; }
+    #qmPrintSheet .ps-signoff { margin-top: 22px; font-size: 13px; }
+    #qmPrintSheet .ps-foot { margin-top: 26px; padding-top: 10px; border-top: 1px solid #e6ded2; font-size: 10.5px; color: #8a8478; letter-spacing: 0.03em; }
   }
 
   @media (max-width: 860px) {
@@ -393,7 +403,6 @@
           <button type="button" class="btn btn-brass" id="qmDownloadPdf">Download PDF</button>
           <a class="btn btn-ghost" href="/contact/">Talk it through with us</a>
         </div>
-        <p class="fine-print">Your figures never leave this browser.</p>
       </div>
 
     </div>
@@ -444,6 +453,6 @@
 <div id="qmPrintSheet" aria-hidden="true"></div>
 
 <script src="/assets/js/main.js?v=20260924g" defer></script>
-<script src="/assets/js/calculator.js?v=20260925m" defer></script>
+<script src="/assets/js/calculator.js?v=20260925n" defer></script>
 </body>
 </html>
