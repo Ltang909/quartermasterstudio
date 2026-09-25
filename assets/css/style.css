@@ -835,6 +835,7 @@ pre {
   .section { padding: 64px 0; }
   .nav-links { display: none; }
   .nav-toggle { display: inline-flex; }
+  .brand-lockup { height: 40px; }
   .hero { padding: 48px 0 64px; }
   .hero-visual img { height: 340px; }
   .manifest-card { position: static; width: 100%; margin-top: 16px; }
