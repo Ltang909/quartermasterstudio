@@ -181,33 +181,41 @@
 
   /* ---------- write-up ---------- */
 
-  function buildWriteUp(m, email, company) {
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function buildPrintSheet(m) {
     var win = m.delta > 0;
-    var line = win
-      ? "At your numbers you are overpaying by " + usd(m.delta) + " a night: " + usd(m.delta * 24) + " over a year of the same program."
-      : "At your numbers your own team runs it " + usd(-m.delta) + " cheaper a night, so an agency would be the wrong call at this volume.";
+    var verdict = Math.abs(m.delta) < m.fee * 0.02
+      ? "Line ball. At these numbers the two come out the same."
+      : win
+        ? "At your numbers you are overpaying by " + usd(m.delta) + " a night: " + usd(m.delta * 24) + " over a year of the same program."
+        : "At your numbers your own team runs it " + usd(-m.delta) + " cheaper a night, so an agency would be the wrong call at this volume.";
     var tierNote = TIER_NOTES[m.fee] || TIER_NOTES[17000];
-    var L = [];
-    L.push("EXECUTIVE DINNER PROGRAM - COST AND RISK ANALYSIS");
-    L.push("Prepared by Quartermaster Studio" + (company ? " for " + company : "") + (email ? " (" + email + ")" : ""));
-    L.push("");
-    L.push("THE NIGHT ITSELF");
-    L.push("One night reads as " + usd(m.budgetLine) + " on the event line and costs " + usd(m.trueCost) + " loaded. " +
-           usd(m.labourPer) + " of it is people and overhead, sitting in two payroll lines nobody adds back up.");
-    L.push("With a bespoke agency the same night is " + usd(m.withMe) + ": " + usd(m.fee) + " fixed, on one invoice.");
-    L.push(line);
-    L.push("");
-    L.push("THE HIRING RISK");
-    L.push("A hire exposes you to a range. " + usd(m.riskBest) + " is sunk even when the hire works out: you cannot recruit or ramp for free. " +
-           "If the hire does not work out (" + Math.round(m.failPct * 100) + "%), the exposure is " + usd(m.riskWorst) + ". " +
-           "Risk-weighted, that is " + usd(m.riskLikely) + " before a single guest sits down, and the first comparable dinner is " +
-           m.weeksToFirst + " weeks out versus " + AGENCY_WEEKS + " with an agency.");
-    L.push("");
-    L.push("WHERE WE WOULD START");
-    L.push(tierNote);
-    L.push("");
-    L.push("One honest note: this compares labour to labour. Venue, food, AV and gifting are paid either way, and you hold those contracts directly, so you keep the pricing leverage and nothing is marked up. The saving is on the people, not on the program.");
-    return L.join("\n");
+    var today = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    return "" +
+      "<h1>Quartermaster Studio</h1>" +
+      "<p class=\"ps-sub\">Executive dinner program, cost and risk analysis. Prepared " + esc(today) + ".</p>" +
+      "<p class=\"ps-verdict\">" + esc(verdict) + "</p>" +
+      "<h2>The night itself</h2>" +
+      "<table>" +
+      "<tr><td>One night on the event line</td><td class=\"num\">" + esc(usd(m.budgetLine)) + "</td></tr>" +
+      "<tr><td>True loaded cost, in-house</td><td class=\"num\">" + esc(usd(m.trueCost)) + "</td></tr>" +
+      "<tr><td>Of which: people and overhead</td><td class=\"num\">" + esc(usd(m.labourPer)) + "</td></tr>" +
+      "<tr><td>Same night with Quartermaster (" + esc(usd(m.fee)) + " fixed)</td><td class=\"num\">" + esc(usd(m.withMe)) + "</td></tr>" +
+      "</table>" +
+      "<h2>The hiring risk</h2>" +
+      "<table>" +
+      "<tr><td>Sunk even when the hire works out</td><td class=\"num\">" + esc(usd(m.riskBest)) + "</td></tr>" +
+      "<tr><td>Exposure if the hire does not (" + Math.round(m.failPct * 100) + "%)</td><td class=\"num\">" + esc(usd(m.riskWorst)) + "</td></tr>" +
+      "<tr><td>Risk-weighted, before a single guest sits down</td><td class=\"num\">" + esc(usd(m.riskLikely)) + "</td></tr>" +
+      "<tr><td>Weeks to a first comparable dinner</td><td class=\"num\">" + m.weeksToFirst + " vs " + AGENCY_WEEKS + "</td></tr>" +
+      "</table>" +
+      "<h2>Where we would start</h2>" +
+      "<p>" + esc(tierNote) + "</p>" +
+      "<div class=\"ps-note\"><p style=\"margin:0;\"><strong>One honest note:</strong> this compares labour to labour. Venue, food, AV and gifting are paid either way, and you hold those contracts directly, so you keep the pricing leverage and nothing is marked up. The saving is on the people, not on the program.</p></div>" +
+      "<p class=\"ps-foot\">quartermasterstudio.leontang.ca &mdash; figures as entered on the ROI calculator.</p>";
   }
 
   /* ---------- render ---------- */
@@ -330,47 +338,13 @@
       }, 150);
     });
 
-    // lead capture -> generates the written analysis on the spot
-    var form = $("qmLeadForm");
-    if (form) form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var email = $("qmLeadEmail").value.trim();
-      var company = $("qmLeadCompany").value.trim();
-      var msg = $("qmLeadMsg");
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        msg.textContent = "That email address does not look right. Mind checking it?";
-        msg.className = "lead-msg bad";
-        return;
-      }
+    // PDF download -> builds a print sheet with their numbers, opens print dialog
+    var dlBtn = $("qmDownloadPdf");
+    if (dlBtn) dlBtn.addEventListener("click", function () {
       var m = model();
-      var out = $("qmWriteUp");
-      $("qmWriteUpText").textContent = buildWriteUp(m, email, company);
-      out.style.display = "block";
-      msg.textContent = "Done. Your analysis is below" + (company ? ", " + company : "") + ".";
-      msg.className = "lead-msg good";
-      out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      $("qmPrintSheet").innerHTML = buildPrintSheet(m);
+      window.print();
     });
-
-    var copyBtn = $("qmCopyWriteUp");
-    if (copyBtn) copyBtn.addEventListener("click", function () {
-      var txt = $("qmWriteUpText").textContent;
-      var done = function () { $("qmCopyNote").style.display = "block"; };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(done, function () { fallbackCopy(txt, done); });
-      } else {
-        fallbackCopy(txt, done);
-      }
-    });
-
-    function fallbackCopy(txt, done) {
-      var ta = document.createElement("textarea");
-      ta.value = txt;
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand("copy"); } catch (e) { /* noop */ }
-      document.body.removeChild(ta);
-      done();
-    }
 
     render();
   });

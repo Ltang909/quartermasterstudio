@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ROI Calculator - Quartermaster Studio</title>
 <meta name="description" content="In-house hire or one number per dinner? Put your own figures in and see what an executive dinner program actually costs and risks.">
-<link rel="stylesheet" href="/assets/css/style.css?v=20260925i">
+<link rel="stylesheet" href="/assets/css/style.css?v=20260925n">
 <link rel="icon" type="image/png" href="/assets/img/favicon.png?v=20260925k">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=20260925k">
 <style>
@@ -172,17 +172,27 @@
     border-radius: 0 12px 12px 0; font-size: 0.98rem;
   }
 
-  /* lead capture */
-  .lead-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 14px; align-items: end; margin-top: 24px; }
-  .lead-msg { font-weight: 700; margin-top: 14px; display: none; }
-  .lead-msg.bad { display: block; color: #e08a7d; }
-  .lead-msg.good { display: block; color: var(--cedar-light); }
-  .fine-print { font-size: 0.88rem; color: var(--cloud-faint); font-style: italic; margin-top: 14px; }
-  #qmWriteUp { margin-top: 24px; }
-  #qmWriteUp pre {
-    white-space: pre-wrap; font-family: var(--font-body); font-size: 0.95rem;
-    background: var(--forage-deep); border: 1px solid var(--line);
-    border-radius: 12px; padding: 24px; line-height: 1.7;
+  /* print sheet (PDF download) */
+  #qmPrintSheet { display: none; }
+
+  @media print {
+    body > :not(#qmPrintSheet) { display: none !important; }
+    #qmPrintSheet {
+      display: block !important;
+      color: #191919;
+      font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+      padding: 24px 8px;
+    }
+    #qmPrintSheet h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: 0.04em; }
+    #qmPrintSheet .ps-sub { font-size: 13px; color: #555; margin: 0 0 20px; }
+    #qmPrintSheet h2 { font-size: 15px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+    #qmPrintSheet .ps-verdict { font-size: 17px; font-weight: 700; margin: 0 0 6px; }
+    #qmPrintSheet p { font-size: 13px; line-height: 1.6; margin: 0 0 8px; }
+    #qmPrintSheet table { width: 100%; border-collapse: collapse; margin: 8px 0 4px; font-size: 13px; }
+    #qmPrintSheet td { padding: 7px 4px; border-bottom: 1px solid #ddd; vertical-align: top; }
+    #qmPrintSheet td.num { text-align: right; font-weight: 700; white-space: nowrap; }
+    #qmPrintSheet .ps-note { border-left: 3px solid #a35d4d; padding: 10px 14px; background: #f6f4f1; margin-top: 14px; }
+    #qmPrintSheet .ps-foot { margin-top: 26px; font-size: 11px; color: #777; }
   }
 
   @media (max-width: 860px) {
@@ -190,7 +200,6 @@
     .calc-grid, .tiles, .risk-pair { grid-template-columns: 1fr; }
     .bbar-row { grid-template-columns: 1fr; gap: 8px; }
     .bbar-val { text-align: left; }
-    .lead-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -377,33 +386,14 @@
 
       <!-- CTA -->
       <div class="panel">
-        <span class="kicker">Next step</span>
-        <h2>Want this written up with your numbers?</h2>
-        <p class="lede">We will send the analysis back with your figures in it, plus a short note on which market and format we would run first.</p>
-        <form id="qmLeadForm" novalidate>
-          <div class="lead-grid">
-            <div class="field" style="margin:0;">
-              <label for="qmLeadEmail">Work email</label>
-              <input type="email" id="qmLeadEmail" placeholder="Work email" autocomplete="email">
-            </div>
-            <div class="field" style="margin:0;">
-              <label for="qmLeadCompany">Company</label>
-              <input type="text" id="qmLeadCompany" placeholder="Company" autocomplete="organization">
-            </div>
-            <div><button type="submit" class="btn btn-brass">Send it over</button></div>
-          </div>
-          <p class="lead-msg" id="qmLeadMsg" aria-live="polite"></p>
-          <p class="fine-print">Your figures are used to prepare that note and nothing else.</p>
-        </form>
-        <div id="qmWriteUp" style="display:none;">
-          <h3>Your analysis, with your numbers in it</h3>
-          <pre id="qmWriteUpText"></pre>
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
-            <button type="button" class="btn" id="qmCopyWriteUp">Copy analysis</button>
-            <a class="btn btn-ghost" href="/contact/">Talk it through with us</a>
-          </div>
-          <p id="qmCopyNote" class="fine-print" style="display:none; color:var(--cedar-light); font-weight:700;">Copied.</p>
+        <span class="kicker">Take it with you</span>
+        <h2>Download this with your numbers</h2>
+        <p class="lede">A one-page PDF of the analysis, with your figures in it. Built for whoever approves the budget.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:24px;">
+          <button type="button" class="btn btn-brass" id="qmDownloadPdf">Download PDF</button>
+          <a class="btn btn-ghost" href="/contact/">Talk it through with us</a>
         </div>
+        <p class="fine-print">Your figures never leave this browser.</p>
       </div>
 
     </div>
@@ -451,7 +441,9 @@
   </div>
 </footer>
 
+<div id="qmPrintSheet" aria-hidden="true"></div>
+
 <script src="/assets/js/main.js?v=20260924g" defer></script>
-<script src="/assets/js/calculator.js?v=20260925i" defer></script>
+<script src="/assets/js/calculator.js?v=20260925m" defer></script>
 </body>
 </html>

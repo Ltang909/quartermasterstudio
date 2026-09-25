@@ -31,12 +31,14 @@
     var form = document.getElementById("inquiry-form");
     if (!form) return;
 
-    /* Two-step flow: the calendar booking reveals only after the brief is submitted. */
-    var book = document.getElementById("book");
+    /* Two-step flow: after the brief is submitted, the form is replaced
+       in place by the calendar booking, with name + email prefilled. */
+    var panel = document.getElementById("step2-panel");
+    var stepKicker = document.getElementById("step-kicker");
     var bookConfirm = document.getElementById("book-confirm");
     var calendlySlot = document.getElementById("calendly-slot");
     var calendlyInit = false;
-    if (book) book.hidden = true;
+    if (panel) panel.hidden = true;
 
     function initCalendly(prefill) {
       if (calendlyInit || !calendlySlot) return;
@@ -59,18 +61,20 @@
     }
 
     function revealBooking(name, email) {
-      if (!book) return;
-      book.hidden = false;
+      if (!panel) return;
+      if (stepKicker) stepKicker.hidden = true;
+      panel.hidden = false;
       if (bookConfirm) {
         bookConfirm.textContent = "Brief received" + (name ? ", " + name : "") + ". Now lock in your 30 minutes.";
         bookConfirm.hidden = false;
       }
       initCalendly({ name: name || "", email: email || "" });
-      setTimeout(function () { book.scrollIntoView({ behavior: "smooth" }); }, 80);
+      setTimeout(function () { panel.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80);
     }
 
     function backToForm() {
-      if (book) book.hidden = true;
+      if (panel) panel.hidden = true;
+      if (stepKicker) stepKicker.hidden = false;
       calendlyInit = false;
       form.style.display = "";
       form.scrollIntoView({ behavior: "smooth", block: "start" });

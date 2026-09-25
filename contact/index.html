@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact - Quartermaster Studio</title>
 <meta name="description" content="Initiate a project inquiry or reserve a consultation with Quartermaster Studio.">
-<link rel="stylesheet" href="/assets/css/style.css?v=20260925i">
+<link rel="stylesheet" href="/assets/css/style.css?v=20260925n">
 <link rel="icon" type="image/png" href="/assets/img/favicon.png?v=20260925k">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=20260925k">
 <style>
@@ -77,7 +77,7 @@
   <section class="block" style="padding-top:24px;">
     <div class="wrap split" style="align-items:start;">
       <div>
-        <span class="kicker step-kicker">Step 1 of 2</span>
+        <span class="kicker step-kicker" id="step-kicker">Step 1 of 2</span>
         <form id="inquiry-form" novalidate>
           <div class="field-row">
             <div class="field">
@@ -113,7 +113,7 @@
             </div>
             <div class="field">
               <label for="f-guests">Guest count</label>
-              <input type="number" id="f-guests" name="guests" min="1" max="500" placeholder="e.g. 20">
+              <input type="number" id="f-guests" name="guests" min="1" max="500" placeholder="Rough number is fine">
             </div>
           </div>
           <div class="field">
@@ -121,8 +121,19 @@
             <textarea id="f-msg" name="message" rows="5" placeholder="The objective, the audience, the city, anything that matters."></textarea>
             <span class="hint">Objectives beat logistics at this stage. Tell us what the room needs to achieve.</span>
           </div>
-          <button type="submit" class="btn btn-brass">Prepare my inquiry brief</button>
+          <button type="submit" class="btn btn-brass">Continue to booking</button>
         </form>
+        <div id="step2-panel" hidden>
+          <span class="kicker step-kicker">Step 2 of 2</span>
+          <h2>Book a 30-minute meeting</h2>
+          <p id="book-confirm" hidden></p>
+          <p class="lede">Grab 30 minutes on the calendar. We will cover the objective, the guest list, and whether we are the right quartermaster for the room.</p>
+          <div id="calendly-slot" style="min-width:320px;height:700px;">
+            <p><a class="card-link" href="https://calendly.com/ltang9090/30min">Book directly on Calendly</a></p>
+          </div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <p class="step-links"><a href="#" id="edit-details-2">Edit your details</a></p>
+        </div>
 
       </div>
 
@@ -130,11 +141,11 @@
         <div class="card">
           <div class="no">What happens next</div>
           <h3>Reserve a consultation</h3>
-          <p>One 30-minute meeting. We learn the objective and the guest list, then quote the dinner.</p>
+          <p>One 30-minute meeting. We learn the objective and the guest list, then quote the event.</p>
           <ul class="next-steps">
             <li><span class="step-no">1.</span><span><strong>You send the brief.</strong> Two minutes, right here.</span></li>
-            <li><span class="step-no">2.</span><span><strong>You book 30 minutes.</strong> Grab a time on the calendar.</span></li>
-            <li><span class="step-no">3.</span><span><strong>We quote the dinner.</strong> One fixed number, quoted up front.</span></li>
+            <li><span class="step-no">2.</span><span><strong>You book 30 minutes.</strong> Grab a time, right here.</span></li>
+            <li><span class="step-no">3.</span><span><strong>We quote the event.</strong> One fixed number, quoted up front.</span></li>
           </ul>
         </div>
         <div class="card" style="margin-top:22px;">
@@ -146,20 +157,6 @@
       </aside>
     </div>
   </section>
-
-  <section class="block" id="book">
-    <div class="wrap">
-      <span class="kicker">Step 2 of 2</span>
-      <h2>Book a 30-minute meeting</h2>
-      <p class="lede">Prefer to talk it through? Grab 30 minutes on the calendar. We will cover the objective, the guest list, and whether we are the right quartermaster for the room.</p>
-      <p id="book-confirm" hidden></p>
-      <div id="calendly-slot" style="min-width:320px;height:700px;">
-        <p><a class="card-link" href="https://calendly.com/ltang9090/30min">Book directly on Calendly</a></p>
-      </div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      <p class="step-links"><a href="#" id="edit-details-2">Edit your details</a></p>
-    </div>
-  </section>
 </main>
 
 <footer class="site">
@@ -167,7 +164,7 @@
     <div class="foot-grid">
       <div>
         <div class="foot-brand">Quartermaster Studio</div>
-        <p style="font-size:0.95rem; max-width:34ch;">Executive dinners and private events, provisioned down to the last detail.</p>
+        <p style="font-size:0.95rem; max-width:34ch;">Executive events, provisioned down to the last detail.</p>
       </div>
       <div>
         <h4>Studio</h4>
@@ -204,6 +201,6 @@
 </footer>
 
 <script src="/assets/js/main.js?v=20260924g" defer></script>
-<script src="/assets/js/contact.js?v=20260925l" defer></script>
+<script src="/assets/js/contact.js?v=20260925n" defer></script>
 </body>
 </html>
