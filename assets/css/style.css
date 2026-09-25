@@ -232,7 +232,7 @@ header.site {
   align-items: center;
 }
 .hero-copy .kicker { margin-bottom: 22px; }
-.hero-copy h1 { margin-bottom: 24px; }
+.hero-copy h1 { margin-bottom: 24px; font-size: clamp(2.2rem, 4.5vw, 3.25rem); }
 .hero-copy h1 .num { color: var(--cedar-light); }
 .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
 .hero-note {
