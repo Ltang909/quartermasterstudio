@@ -9,26 +9,6 @@
 <link rel="icon" type="image/png" href="/assets/img/favicon.png?v=20260925k">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=20260925k">
 <style>
-  .inquiry-result {
-    display: none;
-    background: var(--slate);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 28px;
-    box-shadow: var(--shadow);
-    margin-top: 8px;
-  }
-  .inquiry-result.show { display: block; }
-  .inquiry-result pre {
-    white-space: pre-wrap;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    background: var(--forage-deep);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 18px;
-    margin: 16px 0;
-  }
   [hidden] { display: none !important; }
   .step-kicker { display: inline-flex; margin-bottom: 18px; }
   #book-confirm {
@@ -144,17 +124,6 @@
           <button type="submit" class="btn btn-brass">Prepare my inquiry brief</button>
         </form>
 
-        <div class="inquiry-result" id="inquiry-result" aria-live="polite">
-          <h3>Your inquiry brief is ready</h3>
-          <p style="color:var(--cloud-faint); font-size:0.95rem;">Copy it and send it our way. We respond to every inquiry personally.</p>
-          <pre id="brief-text"></pre>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button type="button" class="btn" id="copy-brief">Copy brief</button>
-            <a class="btn btn-ghost" id="mailto-brief" href="#">Open in email</a>
-          </div>
-          <p id="copy-note" style="font-size:0.9rem; color:var(--cedar-light); font-weight:700; margin-top:12px; display:none;">Copied. We will take it from here.</p>
-          <p style="margin-top:16px;"><a href="#" id="edit-details" style="color:var(--cedar-light); font-size:0.95rem;">Edit your details</a></p>
-        </div>
       </div>
 
       <aside>
@@ -188,7 +157,7 @@
         <p><a class="card-link" href="https://calendly.com/ltang9090/30min">Book directly on Calendly</a></p>
       </div>
       <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      <p class="step-links"><a href="#inquiry-result" id="back-to-brief">&larr; Back to your brief</a> &nbsp;&middot;&nbsp; <a href="#" id="edit-details-2">Edit your details</a></p>
+      <p class="step-links"><a href="#" id="edit-details-2">Edit your details</a></p>
     </div>
   </section>
 </main>
@@ -235,6 +204,6 @@
 </footer>
 
 <script src="/assets/js/main.js?v=20260924g" defer></script>
-<script src="/assets/js/contact.js?v=20260925k" defer></script>
+<script src="/assets/js/contact.js?v=20260925l" defer></script>
 </body>
 </html>
