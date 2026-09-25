@@ -265,17 +265,6 @@
     $("qmRiskAgencyNum").textContent = usd(m.fee);
     $("qmRiskAgencyNote").innerHTML = "Per dinner, at the moment you book it. <b>" + usd(0) +
       "</b> until you do, nothing in a month you skip, and no version of this that costs more.";
-
-    // timeline duel: the hiring-clock sliders (months to fill, weeks to first dinner)
-    // only move time, not dollars — surface the gap prominently so they feel live
-    var waitWks = m.weeksToFirst - AGENCY_WEEKS;
-    $("qmTimeline").innerHTML =
-      '<div class="td-row"><span>First comparable dinner, hiring</span><strong>' + m.weeksToFirst + ' weeks out</strong></div>' +
-      '<div class="td-row agency"><span>First comparable dinner, bespoke agency</span><strong>' + AGENCY_WEEKS + ' weeks out</strong></div>' +
-      '<div class="td-foot">' + (waitWks > 0
-        ? 'That is <b>' + waitWks + ' weeks</b> of pipeline the agency would already be building.'
-        : 'On these settings the hire keeps pace with the agency.') + '</div>';
-
     drawRiskBar(m);
     $("qmRiskRows").innerHTML = riskRows(m);
     $("qmRiskNote").innerHTML = "<strong>The asymmetry is the shape, not the size.</strong> Even a hire that goes perfectly costs " +

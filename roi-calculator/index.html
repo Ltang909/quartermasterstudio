@@ -171,18 +171,6 @@
     border-radius: 0 12px 12px 0; font-size: 0.98rem;
   }
 
-  /* timeline duel: makes the hiring-clock sliders visibly move the page */
-  .timeline-duel { margin: 22px 0 6px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-  .timeline-duel:empty { display: none; }
-  .td-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 13px 18px; background: var(--slate-soft); }
-  .td-row + .td-row { border-top: 1px solid var(--line); }
-  .td-row.agency { background: var(--forage-deep); }
-  .td-row span { color: var(--cloud-faint); font-size: 0.92rem; }
-  .td-row strong { font-family: var(--font-display); font-size: 1.15rem; font-weight: 650; color: var(--cloud); white-space: nowrap; }
-  .td-row.agency strong { color: var(--cedar-light); }
-  .td-foot { padding: 10px 18px; font-size: 0.88rem; color: var(--cloud-faint); font-style: italic; background: var(--forage); }
-  .td-foot b { color: var(--cloud); font-style: normal; }
-
   /* lead capture */
   .lead-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 14px; align-items: end; margin-top: 24px; }
   .lead-msg { font-weight: 700; margin-top: 14px; display: none; }
@@ -374,8 +362,6 @@
           </div>
         </div>
 
-        <div id="qmTimeline" class="timeline-duel"></div>
-
         <div id="qmRiskbar"></div>
         <div class="legend">
           <span><span class="sw seen"></span>Hiring: likely, between best and worst case</span>
@@ -468,6 +454,6 @@
 </footer>
 
 <script src="/assets/js/main.js?v=20260924g" defer></script>
-<script src="/assets/js/calculator.js?v=20260925a" defer></script>
+<script src="/assets/js/calculator.js?v=20260924g" defer></script>
 </body>
 </html>
